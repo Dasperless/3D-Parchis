@@ -1,12 +1,22 @@
+import enum
 import random
-from logica import Ficha
+from Ficha import Ficha
+
+class Color(enum.Enum):
+	Amarillo = 1
+	Azul = 2
+	Rojo = 3
+	Verde = 4
+
 class Jugador:
 	dado = [1,2,3,4,4,5,5,6,6]	#Dado del jugador
 	fichas = []					#Fichas del jugador
 	nombre = ""					#Nombre del jugador
+	color = "" 
 
-	def __init__(self, pNombre):
+	def __init__(self, pNombre, pColor):
 		self.nombre = pNombre
+		self.color = pColor
 		self.crearFicha(3)
 
 	#Crea las fichas del jugador
