@@ -1,13 +1,14 @@
 import enum
 
 #Representan los estados de la ficha
-class Estado(enum.Enum):
+class EstadoFicha(enum.Enum):
 	casa = 0
 	tablero = 1
-	gane = 2
+	pasillo = 2
+	gano = 3
 
 class Ficha:
 	estado = ""
 
 	def __init__(self):
-		self.estado = Estado.casa
+		self.estado = EstadoFicha.casa
