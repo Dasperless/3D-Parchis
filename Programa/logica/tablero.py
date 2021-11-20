@@ -3,7 +3,7 @@ from Casilla import Casilla
 from Jugador import Color
 
 class Tablero:
-	# jugadores = []
+	jugadores = []
 	tablero = []
 	pasilloAmarillo = []
 	pasilloAzul = []
@@ -14,10 +14,10 @@ class Tablero:
 		self.crearTablero()
 		self.crearPasillos()
 	
-	# #agrega un jugador al tablero
-	# def agregarJugador(self,jugador):
-	# 	if(len(self.jugadores)<4):
-	# 		self.jugadores.append(jugador)
+	#agrega un jugador al tablero
+	def agregarJugador(self,jugador):
+		if(len(self.jugadores)<4):
+			self.jugadores.append(jugador)
 
 	#crea el tablero de parchis
 	def crearTablero(self):

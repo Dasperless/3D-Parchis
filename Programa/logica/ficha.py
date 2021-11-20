@@ -9,6 +9,14 @@ class EstadoFicha(enum.Enum):
 
 class Ficha:
 	estado = ""
+	posicion = 0
 
 	def __init__(self):
+		self.estado = EstadoFicha.casa
+
+	def posicion(self, posicion):
+		self.posicion = posicion
+
+	def regresarCasa(self):
+		posicion = 0
 		self.estado = EstadoFicha.casa
