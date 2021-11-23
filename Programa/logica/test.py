@@ -1,12 +1,9 @@
-from Jugador import Jugador, Color
-from Tablero import Tablero
-from Casilla import Casilla, TipoCasilla
+from Parchis import Parchis
+from Jugador import Color
 
+p = Parchis()
+p.agregarJugador("Juan")
+p.agregarJugador("Darío")
 
-p1 = Jugador("Juan",Color.Amarillo)
-p2 = Jugador("Pedro",Color.Azul)
-t1 = Tablero()
-t1.agregarJugador(p1)	
-t1.agregarJugador(p2)	
-
-print(t1.jugadores[0].nombre)
+p.ordenarJugadores()
+print(p.verificarMovimiento(p.jugadores[0],p.jugadores[0].fichas[0], 5))

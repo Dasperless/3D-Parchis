@@ -22,7 +22,7 @@ class Tablero:
 	#crea el tablero de parchis
 	def crearTablero(self):
 		casillasSeguras = [12,17,29,34,46,51,63,68]
-		for i in range(68):
+		for i in range(1,69):
 			if(i== 5):
 				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Amarillo))
 			elif(i== 22):
@@ -36,6 +36,14 @@ class Tablero:
 			else:
 				self.tablero.append(Casilla(TipoCasilla.normal))
 	
+	#Devuelve la casilla en la posicion indicada, de forma circular (1 es el primer indice)
+	def obtenerCasilla(self,posicion):
+		return self.tablero[(posicion-1)%len(self.tablero)]
+
+
+	# def obtenerPasillo(self,jugador,posicion):
+		
+
 	#Crea los pasillos de cada color
 	def crearPasillos(self):
 		for i in range(8):

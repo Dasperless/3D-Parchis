@@ -14,9 +14,11 @@ class Ficha:
 	def __init__(self):
 		self.estado = EstadoFicha.casa
 
-	def posicion(self, posicion):
-		self.posicion = posicion
+	#Mueve la ficha a una posicion
+	def cambiarPosicion(self, nuevaPosicion	):
+		self.posicion = nuevaPosicion	
 
+	#Regresa a casa la ficha
 	def regresarCasa(self):
 		posicion = 0
 		self.estado = EstadoFicha.casa

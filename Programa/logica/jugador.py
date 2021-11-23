@@ -1,6 +1,7 @@
 import enum
 import random
 from Ficha import Ficha
+from Ficha import EstadoFicha
 
 class Color(enum.Enum):
 	Amarillo = 1
@@ -12,12 +13,19 @@ class Jugador:
 	dado = [1,2,3,4,4,5,5,6,6]	#Dado del jugador
 	fichas = []					#Fichas del jugador
 	nombre = ""					#Nombre del jugador
-	color = "" 
+	color = None 
 
-	def __init__(self, pNombre, pColor):
+	def __init__(self, pNombre, pColor = None):
 		self.nombre = pNombre
 		self.color = pColor
 		self.crearFicha(3)
+
+	def establecerColor(self, pColor):
+		self.color = pColor
+
+	#Devuelve True si ha ganado el jugador
+	def haGanado(self):
+		return all(ficha.estado == EstadoFicha.gano for ficha in self.fichas)
 
 	#Crea las fichas del jugador
 	def crearFicha(self, cantidad):
@@ -28,3 +36,8 @@ class Jugador:
 	#Tira el dado del jugador
 	def tirarDado(self):
 		return random.choice(self.dado)
+	
+	#Retorna la ficha 
+	def elegirFicha(self, pFicha):
+		if pFicha >=0 and pFicha <=len(self.fichas):
+			return self.fichas[pFicha]
