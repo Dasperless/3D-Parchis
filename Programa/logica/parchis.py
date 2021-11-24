@@ -73,17 +73,22 @@ class Parchis:
 	def moverFicha(self, jugador, ficha, casillasAMover):
 		if (self.verificarMovimiento(ficha, jugador, casillasAMover)):
 			for i in range(casillasAMover,-1,-1):
-				if (ficha.posicion > 29):
-					ficha.estado = EstadoFicha.pasillo
-					ficha.posicion = 0
+				if (ficha.posicion > 29): #Si llega a la casilla de pasillo
+					if ficha.estado == EstadoFicha.tablero: #Si estaba en el tablero
+						ficha.estado = EstadoFicha.pasillo 	#Se pasa a pasillo
+						ficha.posicion = 0					#Posicion inicial del pasilo
+					self.tablero.obtenerPasillo(jugador,ficha.posicion).colocarFicha(ficha) #Obtiene el pasillo y coloca la ficha
 				elif (ficha.estado == EstadoFicha.casa):
 					self.tablero.obtenerCasilla(self.obtenerPosInicial(jugador)).colocarFicha(ficha)	#Coloca la ficha en la casilla inicial
 				elif(ficha.estado == EstadoFicha.enJuego):
-					self.tablero.obtenerCasilla(ficha.posicion).colocarFicha(ficha)#coloca la ficha en la casilla actual
+					self.tablero.obtenerCasilla(ficha.posicion).colocarFicha(ficha)						#coloca la ficha en la casilla actual
 
 				if(i != 0):
-					self.tablero.obtenerCasilla(ficha.posicion).sacarFicha(ficha) 	#Saca la ficha del tablero
-					ficha.posicion += 1										#Cambia la posicion de la ficha		
+					if ficha.estado == EstadoFicha.enJuego:
+						self.tablero.obtenerCasilla(ficha.posicion).sacarFicha(ficha) 	#Saca la ficha del tablero
+					elif ficha.estado == EstadoFicha.pasillo:
+						self.tablero.obtenerPasillo(jugador,ficha.posicion).sacarFicha(ficha)
+					ficha.posicion += 1												#Cambia la posicion de la ficha		
 
 		else:
 			print("No se puede mover la ficha")

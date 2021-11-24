@@ -40,9 +40,24 @@ class Tablero:
 	def obtenerCasilla(self,posicion):
 		return self.tablero[(posicion-1)%len(self.tablero)]
 
+	#Devuelve el pasillo de un color
+	def obtenerListaPasillo(self,color):
+		if(color == Color.Amarillo):
+			return self.pasilloAmarillo
+		elif(color == Color.Azul):
+			return self.pasilloAzul
+		elif(color == Color.Rojo):
+			return self.pasilloRojo
+		elif(color == Color.Verde):
+			return self.pasilloVerde
+		else:
+			return None
 
-	# def obtenerPasillo(self,jugador,posicion):
-		
+	#Devuelve la lista de jugadores
+	def obtenerPasillo(self,jugador,posicion):
+		lista = self.obtenerListaPasillo(jugador.color)
+		if(posicion < len(lista)):
+			return lista[posicion]
 
 	#Crea los pasillos de cada color
 	def crearPasillos(self):
