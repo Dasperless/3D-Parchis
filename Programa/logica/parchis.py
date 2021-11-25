@@ -2,6 +2,7 @@ from Tablero import Tablero
 from Jugador import Jugador
 from Jugador import Color
 from Ficha import EstadoFicha
+
 class Parchis:
 	tablero = Tablero()
 	jugadores = []
@@ -31,6 +32,7 @@ class Parchis:
 	def hayGanador(self):
 		return any(jugador.haGanado() for jugador in self.jugadores)
 
+	#Verifica el input para elegir una ficha
 	def inputElegirFicha(self):
 		numFicha = input("Ingrese el numero de ficha: ")
 		while not numFicha.isdigit():
@@ -39,12 +41,15 @@ class Parchis:
 
 	#iniciar partida
 	def iniciarPartida(self):
-		self.ordenarJugadores() #ordena los jugadores en base al número de dado o el nombre
-		while(not self.hayGanador()): #mientras no haya ganador
+		self.ordenarJugadores() 		#ordena los jugadores en base al número de dado o el nombre
+		while(not self.hayGanador()): 	#mientras no haya ganador
 			for jugador in self.jugadores:
 				dado = jugador.tirarDado()
+				print("\nTurno de: ", jugador.nombre, "\t", "Dado: ", dado)
+				jugador.imprimirFichas()
 				ficha = jugador.elegirFicha(self.inputElegirFicha())
 				self.moverFicha(jugador, ficha, dado)
+				self.tablero.imprimirTablero()
 
 	#Agrega un juador a la partida
 	def agregarJugador(self, nombre):
@@ -71,7 +76,7 @@ class Parchis:
 
 	#Mueve la ficha en el tablero
 	def moverFicha(self, jugador, ficha, casillasAMover):
-		if (self.verificarMovimiento(ficha, jugador, casillasAMover)):
+		if (self.verificarMovimiento(jugador, ficha, casillasAMover)):
 			for i in range(casillasAMover,-1,-1):
 				if (ficha.posicion > 29): #Si llega a la casilla de pasillo
 					if ficha.estado == EstadoFicha.tablero: #Si estaba en el tablero
@@ -79,16 +84,16 @@ class Parchis:
 						ficha.posicion = 0					#Posicion inicial del pasilo
 					self.tablero.obtenerPasillo(jugador,ficha.posicion).colocarFicha(ficha) #Obtiene el pasillo y coloca la ficha
 				elif (ficha.estado == EstadoFicha.casa):
+					ficha.estado = EstadoFicha.tablero 		#Se pasa a tablero
 					self.tablero.obtenerCasilla(self.obtenerPosInicial(jugador)).colocarFicha(ficha)	#Coloca la ficha en la casilla inicial
-				elif(ficha.estado == EstadoFicha.enJuego):
+				elif(ficha.estado == EstadoFicha.tablero):
 					self.tablero.obtenerCasilla(ficha.posicion).colocarFicha(ficha)						#coloca la ficha en la casilla actual
 
-				if(i != 0):
-					if ficha.estado == EstadoFicha.enJuego:
+				if i > 0:
+					if ficha.estado == EstadoFicha.tablero:
 						self.tablero.obtenerCasilla(ficha.posicion).sacarFicha(ficha) 	#Saca la ficha del tablero
 					elif ficha.estado == EstadoFicha.pasillo:
 						self.tablero.obtenerPasillo(jugador,ficha.posicion).sacarFicha(ficha)
-					ficha.posicion += 1												#Cambia la posicion de la ficha		
 
 		else:
 			print("No se puede mover la ficha")

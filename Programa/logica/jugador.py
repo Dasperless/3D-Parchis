@@ -11,16 +11,19 @@ class Color(enum.Enum):
 
 class Jugador:
 	dado = [1,2,3,4,4,5,5,6,6]	#Dado del jugador
-	fichas = []					#Fichas del jugador
+	fichas = None					#Fichas del jugador
 	nombre = ""					#Nombre del jugador
 	color = None 
 
 	def __init__(self, pNombre, pColor = None):
 		self.nombre = pNombre
+		self.fichas = []
 		self.color = pColor
 		self.crearFicha(3)
 
 	def establecerColor(self, pColor):
+		for ficha in self.fichas:
+			ficha.color = pColor
 		self.color = pColor
 
 	#Devuelve True si ha ganado el jugador
@@ -41,3 +44,7 @@ class Jugador:
 	def elegirFicha(self, pFicha):
 		if pFicha >=0 and pFicha <=len(self.fichas):
 			return self.fichas[pFicha]
+
+	def imprimirFichas(self):
+		for num, ficha in enumerate(self.fichas, start=0):
+			print("Ficha #",num," ",ficha.toString(),"\n")

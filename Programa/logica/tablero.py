@@ -24,17 +24,17 @@ class Tablero:
 		casillasSeguras = [12,17,29,34,46,51,63,68]
 		for i in range(1,69):
 			if(i== 5):
-				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Amarillo))
+				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Amarillo,i))
 			elif(i== 22):
-				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Azul))
+				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Azul,i))
 			elif(i== 39):
-				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Rojo))
+				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Rojo,i))
 			elif(i== 56):
-				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Verde))
+				self.tablero.append(Casilla(TipoCasilla.inicio,Color.Verde,i))
 			elif(i in casillasSeguras):
-				self.tablero.append(Casilla(TipoCasilla.segura))
+				self.tablero.append(Casilla(TipoCasilla.segura,None,i))
 			else:
-				self.tablero.append(Casilla(TipoCasilla.normal))
+				self.tablero.append(Casilla(TipoCasilla.normal,None,i))
 	
 	#Devuelve la casilla en la posicion indicada, de forma circular (1 es el primer indice)
 	def obtenerCasilla(self,posicion):
@@ -72,3 +72,9 @@ class Tablero:
 				self.pasilloAzul.append(Casilla(TipoCasilla.meta))
 				self.pasilloRojo.append(Casilla(TipoCasilla.meta))
 				self.pasilloVerde.append(Casilla(TipoCasilla.meta))
+	
+	def imprimirTablero(self):
+		for i in range(len(self.tablero)):
+			if len(self.tablero[i].fichas) > 0:
+				for ficha in self.tablero[i].fichas:
+					print("casilla: ", self.tablero[i].numero, "ficha: ", ficha.color)
