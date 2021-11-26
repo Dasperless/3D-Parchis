@@ -1,13 +1,14 @@
 
 
+const TipoCasilla = require('./TipoCasilla')
 
-const TipoCasilla = {
-    NORMAL : 0,
-    SEGURA : 1,
-    INICIO : 2,
-    PASILLO: 3,
-    META : 4
-}
+// const TipoCasilla = {
+//     NORMAL : 0,
+//     SEGURA : 1,
+//     INICIO : 2,
+//     PASILLO: 3,_[]
+//     META : 4
+// }
 
 
 module.exports = class Casilla{

@@ -9,10 +9,10 @@ const wss = new WebSocket.Server({ server })
 
 // Clases
 const Ficha = require('./parchis-logica/Ficha')
-const Casilla = require('./parchis-logica/Casilla')
+const Casilla = require('./parchis-logica/Casilla');
+const Jugador = require('./parchis-logica/Jugador');
 
-let partidas = [] // lista de partidas
-
+let partidas = [] // lista de partidasl
 
 
 wss.on('connection', function connection(ws) {
@@ -23,7 +23,7 @@ wss.on('connection', function connection(ws) {
     datosObj = JSON.parse(dataString); //string a JSON
     if(datosObj.tipo === 'crearPartida'){
         partidas.push(datosObj); // agrega nueva partida a la lista
-        jugar();
+        
         servidorPython.nuevaPartida(datosObj);// comunicacion con python
     }
     else if(datosObj.tipo === 'unirsePartida'){
@@ -54,7 +54,8 @@ server.listen(port, function() {
 
 function jugar(){
   console.log("juando");
-  const ficha = new Ficha(null);
-  const casilla = new Casilla(null,null);
+  const ficha = new Ficha();
+  const casilla = new Casilla();
+  const jugador = new Jugador('Juan');
 
 }

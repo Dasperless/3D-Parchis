@@ -1,5 +1,12 @@
 const Ficha = require("./Ficha");
+const Color = require('./Color')
 
+// const Color = {
+//     AMARILLO :1,
+//     AZUL : 2,
+//     ROJO : 3,
+//     VERDE : 4
+// }
 
 module.exports = class Jugador {
 
