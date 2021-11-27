@@ -26,7 +26,7 @@
         ws.close();
       }
 
-      ws = new WebSocket('ws://serious-pig-95.loca.lt');
+      ws = new WebSocket('ws://parchis3dtec.loca.lt');
       ws.onopen = () => {
         console.log('Connection opened!');
       }
@@ -46,7 +46,7 @@
       ws.binaryType = 'arraybuffer';
 
       const jsonCrearPartida = {
-                tipo:"juan",
+                tipo:messageBox.value,
                 nickname:"nombre",
                 tipoJuego:"tipo",
                 cantidadJugadores:"cantidad"
