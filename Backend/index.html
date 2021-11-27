@@ -9,7 +9,7 @@
     const messages = document.querySelector('#messages');
     const messageBox = document.querySelector('#messageBox');
     let ws;
-    
+
     function showMessage(message) {
         console.log(message);
       messages.textContent += `\n\n${message}`;
@@ -30,6 +30,7 @@
       }
       ws.binaryType = 'arraybuffer';
       ws.onmessage = ({ data }) => showMessage(data);
+      // console.log(data);
       ws.onclose = function() {
         ws = null;
       }
@@ -47,13 +48,14 @@
                 tipoMensaje:"crearPartida",
                 identificador: "id",
                 nickname:"nombre",
-                cantidadJugadores:"cantidad"
+                cantidadJugadores:"cantidad",
+                listaJugadores: "[]"
             }
 
       const jsonUnirsePartida = {
           tipoMensaje:"unirsePartida",
-          nombrePartida:"nombrePartida",
-          nickname:"nombre"
+          idPartida:"3051Dario el binomio de oro",
+          nickname:"choliare"
       }
 
       const jsonVerRanking = {
@@ -61,9 +63,14 @@
           nickname:"nombre"
       }
 
+      const jsonConsultaPartida = {
+        tipoMensaje:"getPartidas",
+        nickname:"nombre"
+      }
 
-      ws.send(JSON.stringify(jsonCrearPartida));
-      showMessage(JSON.stringify(jsonCrearPartida));
+
+      ws.send(JSON.stringify(jsonUnirsePartida));
+      showMessage(JSON.stringify(jsonUnirsePartida));
     }
 
     init();

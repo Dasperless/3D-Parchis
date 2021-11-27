@@ -4,7 +4,7 @@ const Color = require("./Color")
 const EstadoFicha = require("./EstadoFicha")
 
 module.exports = class Parchis {
-	constructor(game) {
+	constructor() {
 		this.tablero = new Tablero();
 		this.jugadores = [];
 	}

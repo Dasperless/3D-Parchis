@@ -6,51 +6,122 @@ const port = 6969;
 const server = http.createServer(express);
 const wss = new WebSocket.Server({ server })
 
-// Clases-logica
+
+// import  Clases-logica
 const Ficha = require('./parchis-logica/Ficha')
 const Casilla = require('./parchis-logica/Casilla');
 const Jugador = require('./parchis-logica/Jugador');
-// const servidorPython = require('./python-module/server-game');
-
 
 let partidas = [] // lista de partidas
 
+
+
+// WebSocket server
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
-    dataString = data.toString(); //buffer a string
-    datosObj = JSON.parse(dataString); //string a JSON
+    var dataString = data.toString(); //buffer a string
+    var datosObj = JSON.parse(dataString); //string a JSON
+
     if(datosObj.tipoMensaje === 'crearPartida'){
        crearNuevaPartida(datosObj);
-       datosOBj = partidas.at(-1);
+       datosObj = partidas[partidas.length-1];
+       console.log(datosObj);
     }
 
+
     else if(datosObj.tipoMensaje === 'unirsePartida'){
-    //  servidorPython.unirsePartida(datosObj);
+      unirJugadorPartida(datosObj);
     }
 
     else if(datosObj.tipoMensaje === 'verRanking'){
       // servidorPython.ranking(datosObj);
     }
 
+   
+
     wss.clients.forEach(function each(client) {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        datosOBj.tipoMensaje = 'partidaCreada';
-        client.send(datosObj.toString());
+      // if (client !== ws && client.readyState === WebSocket.OPEN) {
+        
+      // }
+      if(datosObj.tipoMensaje === 'crearPartida'){
+        datosObj.tipoMensaje = 'partidaCreada';
+        enviarPartidaNueva(client,datosObj);
       }
+      else if(datosObj.tipoMensaje === 'unirsePartida'){
+        datosObj.tipoMensaje = 'unirsePartida';
+        enviarDatosPartida(client,datosObj);
+      }
+      else if(datosObj.tipoMensaje === 'getPartidas'){
+        enviarPartidas(client);
+      }
+      
+      
     })
 
 
   })
 })
-
 server.listen(port, function() {
   console.log(`Server is listening on ${port}!`)
 })
 
 
+// ****************************************************************************************
+// Funciones de mensajeria 
+
+function enviarPartidaNueva(socketClient,datosJson){
+  socketClient.send(JSON.stringify(datosJson));
+}
+
+function enviarDatosPartida(socketClient,datosJson){
+    var idPartida = datosJson.idPartida;
+    var partida = buscarPartida(idPartida);
+    socketClient.send(JSON.stringify(partida));
+
+    
+}
+
+function enviarPartidas(socketClient){
+  socketClient.send(JSON.stringify(partidas));
+
+}
+
+
+
 // *****************************************************************************************
 // Funciones de creacion de objetos
 
+// Funcion para buscar una partida especifica
+function buscarPartida(identificador){
+  var res;
+  partidas.forEach(element => {
+    if(element.identificador === identificador){
+      console.log("Partida en lista:",element);
+      res = element;
+    }
+
+  });
+  return res;
+}
+
+
+// Funcion encargada de unir un jugador a una partida
+function unirJugadorPartida(datosJson){
+  console.log(datosJson);
+    var nombreJugador = datosJson.nickname;
+    var idPartida = datosJson.idPartida;
+    var partida = buscarPartida(idPartida);
+    if(partida === undefined){
+      console.log("[ERROR] = Partida no encontrada");
+      return;
+    }
+    partida.listaJugadores.push(nombreJugador);
+    partida.cantidadJugadoresUnidos = partida.cantidadJugadoresUnidos*1;
+    partida.cantidadJugadoresUnidos+=1;
+    
+    console.log("Datos Partida: " ,partida);
+    
+}
 
 
 // Funcion encargada de crear una nueva partida y almacenarla en la lista de partidas
@@ -59,7 +130,7 @@ function crearNuevaPartida(datosJson){
   var idPartida = numeroRandom + datosJson.nickname ;
   datosJson.identificador = idPartida;
   partidas.push(datosJson); // agrega nueva partida a la lista
-  console.log(partidas);
+  // console.log(partidas);
 }
 
 
