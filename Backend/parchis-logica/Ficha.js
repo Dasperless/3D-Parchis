@@ -10,8 +10,8 @@ const EstadoFicha = require('./EstadoFicha')
 
 module.exports = class Ficha {
     constructor(color = null){
+        
         this.color = color; 
-        this.estado = "";
         this.movimientos = 0;
         this.posicion = 0;
         this.estado = EstadoFicha.CASA;

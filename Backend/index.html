@@ -8,16 +8,14 @@
     const sendBtn = document.querySelector('#send');
     const messages = document.querySelector('#messages');
     const messageBox = document.querySelector('#messageBox');
-
     let ws;
-
+    
     function showMessage(message) {
         console.log(message);
       messages.textContent += `\n\n${message}`;
       messages.scrollTop = messages.scrollHeight;
       messageBox.value = '';
     }
-
 
     // Abre conexion con el socketServer
     function init() {
@@ -46,20 +44,20 @@
       ws.binaryType = 'arraybuffer';
 
       const jsonCrearPartida = {
-                tipo:messageBox.value,
+                tipoMensaje:"crearPartida",
+                identificador: "id",
                 nickname:"nombre",
-                tipoJuego:"tipo",
                 cantidadJugadores:"cantidad"
             }
 
       const jsonUnirsePartida = {
-          tipo:"unirsePartida",
+          tipoMensaje:"unirsePartida",
           nombrePartida:"nombrePartida",
           nickname:"nombre"
       }
 
       const jsonVerRanking = {
-          tipo:"verRanking",
+          tipoMensaje:"verRanking",
           nickname:"nombre"
       }
 
@@ -70,4 +68,7 @@
 
     init();
   })();
+
+
+
 </script>
