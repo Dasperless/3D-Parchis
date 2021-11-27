@@ -18,20 +18,29 @@ namespace _3DParchis.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Inicio()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        public IActionResult NuevoJuego()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult UnirseJuego()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
+        }
+
+        public IActionResult VerRanking()
+        {
+            return View();
         }
     }
 }
