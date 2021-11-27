@@ -1,6 +1,13 @@
 ﻿(function () {
     const sendBtn = document.querySelector('#btnCrearJuego');
     let ws;
+    const obtieneData = (data) => {
+        console.log(data);
+        const objData = JSON.parse(data);
+        $("#creadorNombreJuegoServer").val(objData.nickname);
+        $("#nombreJuegoServer").val(objData.identificador);
+        $("#cantJugadorServer").val(objData.cantidadJugadoresUnidos);
+    }
 
 
     // Abre conexion con el socketServer
@@ -35,7 +42,8 @@
             identificador: "id",
             nickname: $("#niknameInput").val(),
             cantidadJugadorJuego: $("#cantidadJugadorJuegoInput").val(),
-            cantidadJugadoresUnidos: "1"
+            cantidadJugadoresUnidos: "1",
+            listaJugadores="[]"
         }
 
         console.log(jsonCrearPartida);
@@ -55,9 +63,6 @@
     //    showMessage(JSON.stringify(jsonCrearPartida));
     }
 
+
     init();
 })();
-
-const obtieneData = (data) => {
-    console.log(data);
-}

@@ -90,14 +90,26 @@
 <div class="container" id="datoCreacion">
     <h4>Datos del juego:</h4>
     <div class="row">
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-outline-primary" style="margin-top:31px">
-                Buscar <i class='bx bx-check bx-burst-hover bx-border-circle'></i>
-            </button>
+        <div class="col-3">
+            <label for="creadorNombreJuegoServer" class="form-label">Creador:</label>
+            <input type="text" class="form-control" id="creadorNombreJuegoServer" name="creadorNombreJuegoServer" disabled>
         </div>
-        <div class="col-4">
-            <label for="telefono1Input" class="form-label">Jugadores en la sala:</label>
+        <div class="col-3">
+            <label for="nombreJuegoServer" class="form-label">Id del juego:</label>
+            <input type="text" class="form-control" id="nombreJuegoServer" name="nombreJuegoServer" disabled>
+        </div>
+        <div class="col-2">
+            <label for="cantJugadorServer" class="form-label">Jugadores en la sala:</label>
             <input type="number" value="0" class="form-control" id="cantJugadorServer" name="cantJugadorServer" disabled>
+        </div>
+        <div class="col-md-4">
+
+            <button type="submit" class="btn btn-outline-success" style="margin-top: 31px; float: right; " disabled>
+                Iniciar Juego <i class='bx bx-check bx-burst-hover bx-border-circle'></i>
+            </button>
+            <button type="submit" class="btn btn-outline-primary" style="margin-top: 31px; margin-right: 5px; float: right;">
+                Recargar <i class='bx bx-check bx-burst-hover bx-border-circle'></i>
+            </button>
         </div>
     </div>
 </div>
