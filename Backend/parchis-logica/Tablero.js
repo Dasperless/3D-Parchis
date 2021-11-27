@@ -1,22 +1,14 @@
-
 const Color = require("./Color")
 
 module.exports = class Tablero {
     
     constructor(){
-        this.jugadores = [];
+        this.crearTablero();
         this.tablero = [];
         this.pasilloAmarillo = []
         this.pasilloAzul = []
         this.pasilloRojo = []
         this.pasilloVerde = []
-    }
-
-    // Agrega un jugador al tablero
-    agregarJugador(jugador){
-        if (this.jugadores.length < 4){
-            this.jugadores.push(jugador);
-        }            
     }
 
     // Crea el tablero de parchis
@@ -94,4 +86,3 @@ module.exports = class Tablero {
         }
     }
 }
-

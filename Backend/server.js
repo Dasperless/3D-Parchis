@@ -11,8 +11,10 @@ const wss = new WebSocket.Server({ server })
 const Ficha = require('./parchis-logica/Ficha')
 const Casilla = require('./parchis-logica/Casilla');
 const Jugador = require('./parchis-logica/Jugador');
+const Parchis = require('./parchis-logica/Parchis');
 
 let partidas = [] // lista de partidas
+var partidaParchis = new Parchis();
 
 
 
@@ -77,8 +79,6 @@ function enviarDatosPartida(socketClient,datosJson){
     var idPartida = datosJson.idPartida;
     var partida = buscarPartida(idPartida);
     socketClient.send(JSON.stringify(partida));
-
-    
 }
 
 function enviarPartidas(socketClient){
@@ -89,7 +89,7 @@ function enviarPartidas(socketClient){
 
 
 // *****************************************************************************************
-// Funciones de creacion de objetos
+// Funciones de manejo de datos 
 
 // Funcion para buscar una partida especifica
 function buscarPartida(identificador){
@@ -119,6 +119,8 @@ function unirJugadorPartida(datosJson){
     partida.cantidadJugadoresUnidos = partida.cantidadJugadoresUnidos*1;
     partida.cantidadJugadoresUnidos+=1;
     
+    unirJugadorPartidaLogica(); // une un jugador a la clase Parchis
+
     console.log("Datos Partida: " ,partida);
     
 }
@@ -136,10 +138,17 @@ function crearNuevaPartida(datosJson){
 
 
 
-function jugar(){
-  console.log("juando");
-  const ficha = new Ficha();
-  const casilla = new Casilla();
-  const jugador = new Jugador('Juan');
 
+
+// *************************************************************************************************
+// Funciones de manejo de objetos y logica
+
+function unirJugadorPartidaLogica(nombre){
+  partidaParchis.agregarJugador(nombre);
+  console.log("Jugadores en partida(Clase parchis):  " , partidaParchis.jugadores);
+}
+
+
+function iniciarPartidaLogica(){
+  partidaParchis.iniciarPartida();
 }
