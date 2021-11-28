@@ -1,19 +1,21 @@
 const Color = require("./Color")
+const Casilla = require("./Casilla")
+const TipoCasilla = require("./TipoCasilla")
 
 module.exports = class Tablero {
     
     constructor(){
-        this.crearTablero();
         this.tablero = [];
         this.pasilloAmarillo = []
         this.pasilloAzul = []
         this.pasilloRojo = []
         this.pasilloVerde = []
+        this.crearTablero();
     }
 
     // Crea el tablero de parchis
     crearTablero(){
-        casillas = [12,17,29,34,46,51,63,68];
+        var casillas = [12,17,29,34,46,51,63,68];
         for (let i =1; i<69; i++){
             if(i==5){
                 this.tablero.push(new Casilla(TipoCasilla.INICIO,Color.AMARILLO,i))
@@ -33,7 +35,7 @@ module.exports = class Tablero {
 
     // Devuelve la casilla en la posicion indicada, de forma circular (1 es el primer indice)
     obtenerCasilla(posicion){
-        return self.tablero[(posicion-1)%this.tablero.length];
+        return this.tablero[(posicion-1)%this.tablero.length];
     }
 
 

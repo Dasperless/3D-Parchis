@@ -1,5 +1,6 @@
 const Ficha = require("./Ficha");
 const Color = require('./Color')
+const EstadoFicha = require("./EstadoFicha")
 
 // const Color = {
 //     AMARILLO :1,

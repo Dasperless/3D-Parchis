@@ -36,11 +36,17 @@ module.exports = class Parchis {
 
 	// Verifica si hay un ganador en la partida
 	hayGanador(){
-		for (let jugador in this.jugadores){
+		this.jugadores.forEach(jugador => {
 			if(jugador.haGanado()){
 				return true;
 			}
-		}
+		});
+
+		// for (var jugador in this.jugadores){
+		// 	if(jugador.haGanado()){
+		// 		return true;
+		// 	}
+		// }
 		return false;
 	}
 
@@ -67,20 +73,31 @@ module.exports = class Parchis {
 	iniciarPartida(){
 		this.ordenarJugadores
 		while (!this.hayGanador()) {
-			for (let jugador in this.jugadores){
-				dado = jugador.tirarDado();
+			this.jugadores.forEach(jugador => {
+				
+				var dado = jugador.tirarDado();
 				console.log("\nTurno de: " + jugador.nombre + " con dado: " + dado);
 				jugador.imprimirFichas();
-				ficha = jugador.elegirFicha(0);
+				var ficha = jugador.elegirFicha(0);
 				this.moverFicha(jugador, ficha, dado);
 				this.tablero.imprimirTablero();
-			}
+			});
+			// for (let jugador in this.jugadores){
+
+			// 	dado = jugador.tirarDado();
+			// 	console.log("\nTurno de: " + jugador.nombre + " con dado: " + dado);
+			// 	jugador.imprimirFichas();
+			// 	ficha = jugador.elegirFicha(0);
+			// 	this.moverFicha(jugador, ficha, dado);
+			// 	this.tablero.imprimirTablero();
+			// }
 		}		
 	}
 
 	//Agrega un jugador a la partida
 	agregarJugador(nombre){
-		this.jugadores.push(new Jugador(nombre));
+		var jugador = new Jugador(nombre);
+		this.jugadores.push(jugador);
 	}
 
 	// Obtiene la posicion inicial del jugador
@@ -90,6 +107,7 @@ module.exports = class Parchis {
 	}
 
 	verificarMovimiento(jugador, ficha, movimientos){
+		var posicionNueva ;
 		if (ficha.estado == EstadoFicha.CASA){
 			posicionNueva = this.obtenerPosInicial(jugador);
 		}else{

@@ -96,7 +96,6 @@ function buscarPartida(identificador){
   var res;
   partidas.forEach(element => {
     if(element.identificador === identificador){
-      console.log("Partida en lista:",element);
       res = element;
     }
 
@@ -119,7 +118,7 @@ function unirJugadorPartida(datosJson){
     partida.cantidadJugadoresUnidos = partida.cantidadJugadoresUnidos*1;
     partida.cantidadJugadoresUnidos+=1;
     
-    unirJugadorPartidaLogica(); // une un jugador a la clase Parchis
+    unirJugadorPartidaLogica(nombreJugador); // une un jugador a la clase Parchis
 
     console.log("Datos Partida: " ,partida);
     
@@ -146,6 +145,7 @@ function crearNuevaPartida(datosJson){
 function unirJugadorPartidaLogica(nombre){
   partidaParchis.agregarJugador(nombre);
   console.log("Jugadores en partida(Clase parchis):  " , partidaParchis.jugadores);
+  iniciarPartidaLogica();
 }
 
 
