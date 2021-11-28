@@ -43,7 +43,7 @@
             nickname: $("#niknameInput").val(),
             cantidadJugadorJuego: $("#cantidadJugadorJuegoInput").val(),
             cantidadJugadoresUnidos: "1",
-            listaJugadores="[]"
+            listaJugadores:[]
         }
 
         console.log(jsonCrearPartida);

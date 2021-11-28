@@ -42,5 +42,10 @@ namespace _3DParchis.Controllers
         {
             return View();
         }
+
+        public IActionResult Juego()
+        {
+            return View();
+        }
     }
 }
