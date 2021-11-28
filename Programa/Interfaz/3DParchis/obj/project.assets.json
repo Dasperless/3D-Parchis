@@ -656,19 +656,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
+    "C:\\Users\\dvarg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Documents\\GitHub\\3D-Parchis\\Programa\\Interfaz\\3DParchis\\3DParchis.csproj",
+      "projectUniqueName": "G:\\Mi unidad\\TEC\\2021\\Segundo semestre\\Lenguajes\\Proyectos\\Proyecto 4\\Proyecto 4 lenguajes\\3D-Parchis\\Programa\\Interfaz\\3DParchis\\3DParchis.csproj",
       "projectName": "3DParchis",
-      "projectPath": "C:\\Users\\Usuario\\Documents\\GitHub\\3D-Parchis\\Programa\\Interfaz\\3DParchis\\3DParchis.csproj",
-      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Documents\\GitHub\\3D-Parchis\\Programa\\Interfaz\\3DParchis\\obj\\",
+      "projectPath": "G:\\Mi unidad\\TEC\\2021\\Segundo semestre\\Lenguajes\\Proyectos\\Proyecto 4\\Proyecto 4 lenguajes\\3D-Parchis\\Programa\\Interfaz\\3DParchis\\3DParchis.csproj",
+      "packagesPath": "C:\\Users\\dvarg\\.nuget\\packages\\",
+      "outputPath": "G:\\Mi unidad\\TEC\\2021\\Segundo semestre\\Lenguajes\\Proyectos\\Proyecto 4\\Proyecto 4 lenguajes\\3D-Parchis\\Programa\\Interfaz\\3DParchis\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\dvarg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -712,7 +712,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[3.1.13, 3.1.13]"
+            "version": "[3.1.19, 3.1.19]"
           }
         ],
         "frameworkReferences": {
@@ -723,7 +723,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

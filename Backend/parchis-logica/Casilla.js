@@ -1,54 +1,48 @@
+const TipoCasilla = require("./TipoCasilla");
+module.exports = class Casilla {
+	constructor(tipo, color = null, numero = null) {
+		this.tipo = tipo;
+		this.fichas = [];
+		this.color = color;
+		this.numero = numero;
+	}
 
+    /**
+     * Coloca una ficha en la casilla.
+     * @param {Ficha} ficha La ficha a colocar.
+     */
+	colocarFicha(ficha) {
+		if (this.fichas.length > 0) {
+			if (this.tipo === TipoCasilla.NORMAL) {
+                var fichaTemp = this.fichas.pop();
+				fichaTemp.regresarCasa();
+				console.log("Se comio una ficha");
+			}
+		}
+        ficha.sumarMovimientos();
+        ficha.cambiarPosicion(this.numero);
+        this.fichas.push(ficha);
+	}
 
-const TipoCasilla = require('./TipoCasilla')
+    /**
+     * Verifica si se puede colocar una ficha en la casilla.
+     * @returns true si se puede colocar la ficha, false en caso contrario.
+     */
+	sePuedeColocarFicha() {
+		return this.fichas.length !== 2;
+	}
 
-// const TipoCasilla = {
-//     NORMAL : 0,
-//     SEGURA : 1,
-//     INICIO : 2,
-//     PASILLO: 3,_[]
-//     META : 4
-// }
-
-
-module.exports = class Casilla{
-    constructor(tipo,color = null,numero = null){
-        this.tipo = tipo;
-        this.fichas = [];
-        this.color = color;
-        this.numero = numero;
-
-    }
-
-    colocarFicha(ficha){
-        if(this.fichas.length > 0 ){
-            if(this.tipo === TipoCasilla.NORMAL){
-                console.log("Se comio una ficha");
-                fichaTemp = this.fichas.pop();
-                fichaTemp.regresarCasa();
-            }
-        } 
-        else{
-            ficha.sumarMovimientos();
-            ficha.cambiarPosicion();
-            this.fichas.push();
-        }
-    }
-
-    sePuedeColocarFicha(){
-        return this.fichas.length !== 2;
-    }
-
-    sacarFicha(ficha){
-        if (this.fichas.length > 0){
-            ficha.cambiarPosicion(ficha.posicion+1);
-            const index = this.fichas.indexOf(ficha);
-            if (index > -1) {
-                this.fichas.splice(index, 1);
-            }
-
-        }
-    }
-
-
-}
+    /**
+     * Quita una ficha de la casilla.
+     * @param {Ficha} ficha la ficha a quitar.
+     */
+	sacarFicha(ficha) {
+		if (this.fichas.length > 0) {
+			ficha.cambiarPosicion(ficha.posicion + 1);
+			const index = this.fichas.indexOf(ficha);
+			if (index > -1) {
+				this.fichas.splice(index, 1);
+			}
+		}
+	}
+};
