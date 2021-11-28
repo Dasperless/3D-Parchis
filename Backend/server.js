@@ -149,6 +149,7 @@ function unirJugadorPartidaLogica(nombre){
 }
 
 
+// Inicia partida a nivel logico
 function iniciarPartidaLogica(){
   partidaParchis.iniciarPartida();
 }
