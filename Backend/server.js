@@ -137,8 +137,6 @@ function crearNuevaPartida(datosJson){
 
 
 
-
-
 // *************************************************************************************************
 // Funciones de manejo de objetos y logica
 
