@@ -31,10 +31,12 @@ module.exports = class Tablero {
                 this.tablero.push(new Casilla(TipoCasilla.NORMAL,null,i))
             }
         }
+        console.log(this.tablero);
     }
 
     // Devuelve la casilla en la posicion indicada, de forma circular (1 es el primer indice)
     obtenerCasilla(posicion){
+        console.log("Priteandos caslla:",this.tablero[posicion]);
         return this.tablero[(posicion-1)%this.tablero.length];
     }
 

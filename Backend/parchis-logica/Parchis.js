@@ -22,16 +22,25 @@ module.exports = class Parchis {
 	// Ordena los jugadores en base al número de dado o el nombre
 	ordenarJugadores(){
 		let orden = [];
-		for(let jugador in this.jugadores){
-			dadoJugador = [jugador, jugador.tirarDado()];
+		 this.jugadores.forEach(jugador => {
+			var dadoJugador = [jugador, jugador.tirarDado()];
 			orden.push(dadoJugador);
-		}
+		});
 
 		if(this.empateDado(orden)){
 			orden.sort(this.compararNombre);
 		}else{
 			orden.sort(this.compararDado);
 		}
+
+		this.jugadores = [];
+        let color = 1;
+		console.log("Orden:",orden);
+        orden.forEach(jugador => {
+            jugador[0].color = color;
+            this.jugadores.push(jugador[0]);
+            color += 1;
+        });
 	}
 
 	// Verifica si hay un ganador en la partida
@@ -71,7 +80,7 @@ module.exports = class Parchis {
 
 
 	iniciarPartida(){
-		this.ordenarJugadores
+		this.ordenarJugadores();
 		while (!this.hayGanador()) {
 			this.jugadores.forEach(jugador => {
 				
@@ -102,13 +111,15 @@ module.exports = class Parchis {
 
 	// Obtiene la posicion inicial del jugador
 	obtenerPosInicial(jugador){
-		const posIniciales = {'AMARILLO':5, 'AZUL':22, 'ROJO':39, 'VERDE':56}
+		const posIniciales = {1:5, 2:22, 3:39, 4:56}
+		console.log("Posiniciales:",posIniciales[jugador.color]);
+		console.log("Jugador.color: ",jugador.color);
 		return posIniciales[jugador.color];
 	}
 
 	verificarMovimiento(jugador, ficha, movimientos){
 		var posicionNueva ;
-		if (ficha.estado == EstadoFicha.CASA){
+		if (ficha.estado === EstadoFicha.CASA){
 			posicionNueva = this.obtenerPosInicial(jugador);
 		}else{
 			posicionNueva = ficha.posicion;
@@ -132,10 +143,10 @@ module.exports = class Parchis {
 						ficha.estado = EstadoFicha.PASILLO;
 					}
 					this.tablero.obtenerPasillo(jugador, ficha.posicion).colocarFicha(ficha);
-				}else if(ficha.estado == EstadoFicha.Casa){
+				}else if(ficha.estado === EstadoFicha.CASA){
 					ficha.estado = EstadoFicha.TABLERO;
 					this.tablero.obtenerCasilla(this.obtenerPosInicial(jugador)).colocarFicha(ficha);
-				}else if(ficha.estado == EstadoFicha.TABLERO){
+				}else if(ficha.estado === EstadoFicha.TABLERO){
 					this.tablero.obtenerPasillo(jugador, ficha.posicion).colocarFicha(ficha);
 				}
 
