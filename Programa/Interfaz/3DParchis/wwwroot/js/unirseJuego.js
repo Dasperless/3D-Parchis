@@ -21,7 +21,7 @@ let partidaGlobal;
             $("#tbodyJuego").html(html);
         }
         if (data.includes("juegoIniciado")) {
-            window.location.href = '../../Home/Juego/?idPartida=' + partidaGlobal + '?idJugador =' + $("#niknameInput").val();
+            window.location.href = '../../Home/Juego/?idPartida=' + partidaGlobal + '&idJugador=' + $("#niknameInput").val() + '&turnoDe=' + objData.turnoDe;
 
         }
         //$("#creadorNombreJuegoServer").val(objData.nickname);

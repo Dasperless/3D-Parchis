@@ -21,7 +21,10 @@
             if (cantidadServer === cantidadJuego) {
                 $('#iniciarPartida').removeAttr("disabled");
             }
-
+        }
+        if (data.includes("juegoIniciado")) {
+            const nombrePartida = $("#nombreJuegoServer").val();
+            window.location.href = '../../Home/Juego/?idPartida=' + nombrePartida + '&idJugador=' + $("#creadorNombreJuegoServer").val() + '&turnoDe=' + objData.turnoDe;
         }
     }
 
@@ -90,5 +93,5 @@ const iniciarPartida = () => {
         idPartida: $("#nombreJuegoServer").val()
     }
     ws.send(JSON.stringify(jsonIniciarPartida));
-    window.location.href = '../../Home/Juego/?idPartida=' + nombrePartida + '?idJugador =' + $("#creadorNombreJuegoServer").val();
+//    window.location.href = '../../Home/Juego/?idPartida=' + nombrePartida + '&idJugador=' + $("#creadorNombreJuegoServer").val();
 }

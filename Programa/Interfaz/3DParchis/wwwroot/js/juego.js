@@ -1,80 +1,105 @@
-﻿////(function () {
-////    const sendBtn = document.querySelector('#btnCrearJuego');
-////    let ws;
-////    const obtieneData = (data) => {
-////        console.log(data);
-////        const objData = JSON.parse(data);
-////        $("#creadorNombreJuegoServer").val(objData.nickname);
-////        $("#nombreJuegoServer").val(objData.identificador);
-////        $("#cantJugadorServer").val(objData.cantidadJugadoresUnidos);
-////    }
+﻿let ws;
+(function () {
+    const sendBtn = document.querySelector('#btnTirarDado');
+    const obtieneData = (data) => {
+        console.log(data);
+        const objData = JSON.parse(data);
+        if (data.includes("resultadoDado")) {
+            if (objData.nickname === $("#identificacionJugadorText").text()) {
+                $("#resDado").text(objData.resultadoDado);
+            }
+        }
+        if (data.includes("movimientoFicha")) {
+            setposicion(objData.idFicha, objData.posFicha);
+            $('#btnTirarDado').attr("disabled");
+            if ($("#identificacionJugadorText").text() === objData.turnoJugador) {
+                $('#btnTirarDado').removeAttr("disabled");
+            }
+        }
+    }
 
 
-////    // Abre conexion con el socketServer
-////    function init() {
-////        if (ws) {
-////            ws.onerror = ws.onopen = ws.onclose = null;
-////            ws.close();
-////        }
+    // Abre conexion con el socketServer
+    function init() {
+        if (ws) {
+            ws.onerror = ws.onopen = ws.onclose = null;
+            ws.close();
+        }
 
-////        ws = new WebSocket('ws://parchis3dtec.loca.lt');
-////        ws.onopen = () => {
-////            console.log('Connection opened!');
-////        }
-////        ws.binaryType = 'arraybuffer';
-////        ws.onmessage = ({ data }) => obtieneData(data);
-////        ws.onclose = function () {
-////            ws = null;
-////        }
-////    }
+        ws = new WebSocket('ws://parchis3dtec.loca.lt');
+        ws.onopen = () => {
+            console.log('Connection opened!');
+        }
+        ws.binaryType = 'arraybuffer';
+        ws.onmessage = ({ data }) => obtieneData(data);
+        ws.onclose = function () {
+            ws = null;
+        }
+    }
 
-////    sendBtn.onclick = function () {
-////        console.log("Entra");
-////        if (!ws) {
-////            console.log("No WebSocket connection :(");
-////            return;
-////        }
+    sendBtn.onclick = function () {
+        console.log("Entra");
+        if (!ws) {
+            console.log("No WebSocket connection :(");
+            return;
+        }
 
-////        ws.binaryType = 'arraybuffer';
+        ws.binaryType = 'arraybuffer';
 
-////        const jsonCrearPartida = {
-////            tipoMensaje: "crearPartida",
-////            identificador: "id",
-////            nickname: $("#niknameInput").val(),
-////            cantidadJugadorJuego: $("#cantidadJugadorJuegoInput").val(),
-////            cantidadJugadoresUnidos: "1",
-////            listaJugadores:[]
-////        }
+        const jsonTirarDado = {
+            tipoMensaje: "tirarDado",
+            nickname: $("#identificacionJugadorText").text(),
 
-////        console.log(jsonCrearPartida);
-////        //const jsonUnirsePartida = {
-////        //    tipoMensaje: "unirsePartida",
-////        //    nombrePartida: "nombrePartida",
-////        //    nickname: "nombre"
-////        //}
+        }
 
-////        //const jsonVerRanking = {
-////        //    tipoMensaje: "verRanking",
-////        //    nickname: "nombre"
-////        //}
+        console.log(jsonTirarDado);
+        ws.send(JSON.stringify(jsonTirarDado));
+    }
 
 
-////        ws.send(JSON.stringify(jsonCrearPartida));
-////    //    showMessage(JSON.stringify(jsonCrearPartida));
-////    }
+    init();
+}) ();
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 
-////    init();
-////}) ();
+$(document).ready(function () {
+    const idPartida = getParameterByName("idPartida");
+    const idJugador = getParameterByName("idJugador");
+    const turnoDe = getParameterByName("turnoDe");
+    $("#identificacionJuegoText").text(idPartida);
+    $("#identificacionJugadorText").text(idJugador);
+    $("#turnoDe").text(turnoDe);
 
+    if (idJugador === turnoDe) {
+        $('#btnTirarDado').removeAttr("disabled");
+    }
+    //console.log(idPartida);
+    //console.log(idJugador);
+    //console.log(turnoDe);
+    
+});
 
 const getFichaMovimiento = (idFicha) => {
     console.log(idFicha);
-    const pos = "14";
-
-    setposicion(pos);
+    /*const pos = "14";*/
+    const jsonFichaMover = {
+        tipoMensaje: "moverFicha",
+        nickname: $("#identificacionJugadorText").text(),
+        idFicha: idFicha,
+        dado: $("#resDado").text()
+    }
+    ws.send(JSON.stringify(jsonFichaMover));
+    //setposicion(idFicha,34);
 }
 
-const setposicion = (pos) => {
-
+const setposicion = (idFicha, pos) => {
+    const color = idFicha.split(",")[1];
+    var html = '<img class="fichaEncelda" src="/img/ficha' + color + '.png" id="' + idFicha + '" onclick="getFichaMovimiento(this.id)" />';
+    $("#" + pos + "pos").html(html);
 }

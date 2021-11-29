@@ -50,7 +50,7 @@
     }
 
     #vacio {
-        background-color: black;
+        background-color: white;
     }
 
 /*    img {
@@ -95,20 +95,29 @@
         left: 80px;
         cursor: pointer;
     }
+    .fichaEncelda {
+        /*position: absolute;*/
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
 </style>
 <div class="text-center">
-    <h3 class="display-4"><b>Juego {Identificacion}</b></h3>
+    <h3 class="display-4"><b>Juego: </b><b id="identificacionJuegoText"></b></h3>
     @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
 
 <div class="container" id="datoCreacion">
-    <h4>Jugador:</h4>
+    <h4><b>Jugador: </b><b id="identificacionJugadorText"></b></h4>
     <div class="row">
         <div class="col">
-            <p><b>Turno de: </b></p>
+            <p><b>Turno de: </b><b id="turnoDe"></b></p>
         </div>
     </div>
-
+    <p><b>Resultado del dado: </b><b id="resDado"></b></p>
+    <button type="submit" class="btn btn-outline-success" id="btnTirarDado" disabled>
+        Tirar Dado <i class='bx bx-dice-6 bx-burst-hover bx-border-circle'></i>
+    </button>
 </div>
 
 <table border="1px" id="tableroPrincipal">
@@ -117,9 +126,9 @@
         <td class="amarillo" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaAmarilla.png" />
-                <img class="ficha1" src="~/img/fichaAmarilla.png" id="jugador0Ficha0Amarillo"onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha2" src="~/img/fichaAmarilla.png" id="jugador0Ficha1Amarillo"onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha3" src="~/img/fichaAmarilla.png" id="jugador0Ficha2Amarillo"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha1" src="~/img/fichaAmarilla.png" id="jugador0Ficha,Amarilla,0"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaAmarilla.png" id="jugador0Ficha,Amarilla,1"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaAmarilla.png" id="jugador0Ficha,Amarilla,2"onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
         <td colspan="2" id="1pos">1</td>
@@ -128,9 +137,9 @@
         <td class="verde" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaVerde.png" />
-                <img class="ficha1" src="~/img/fichaVerde.png" id="jugador1Ficha0Verde"onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha2" src="~/img/fichaVerde.png" id="jugador1Ficha1Verde"onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha3" src="~/img/fichaVerde.png" id="jugador1Ficha2Verde"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha1" src="~/img/fichaVerde.png" id="jugador1Ficha,Verde,0"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaVerde.png" id="jugador1Ficha,Verde,1"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaVerde.png" id="jugador1Ficha,Verde,2"onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
     </tr>
@@ -257,9 +266,9 @@
         <td class="azul" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaAzul.png" />
-                <img class="ficha1" src="~/img/fichaAzul.png" id="jugador2Ficha0Azul"onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha2" src="~/img/fichaAzul.png" id="jugador2Ficha1Azul"onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha3" src="~/img/fichaAzul.png" id="jugador2Ficha2Azul"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha1" src="~/img/fichaAzul.png" id="jugador2Ficha,Azul,0"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaAzul.png" id="jugador2Ficha,Azul,1"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaAzul.png" id="jugador2Ficha,Azul,2"onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
         <td colspan="2" id="27pos">27</td>
@@ -268,9 +277,9 @@
         <td class="rojo" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaRoja.png" />
-                <img class="ficha1" src="~/img/fichaRoja.png" id="jugador3Ficha0Rojo" onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha2" src="~/img/fichaRoja.png" id="jugador3Ficha1Rojo" onclick="getFichaMovimiento(this.id)"/>
-                <img class="ficha3" src="~/img/fichaRoja.png" id="jugador3Ficha2Rojo" onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha1" src="~/img/fichaRoja.png" id="jugador3Ficha,Roja,0" onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaRoja.png" id="jugador3Ficha,Roja,1" onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaRoja.png" id="jugador3Ficha,Roja,2" onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
     </tr>
@@ -307,10 +316,10 @@
     <!-- 20 -->
     <tr>
         <td colspan="2" id="33pos">33</td>
-        <td class="gris" colspan="2">34</td>
+        <td class="gris" colspan="2" id="34pos">34</td>
         <td colspan="2" id="5pos">35</td>
     </tr>
 
 </table>
-
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="~/js/juego.js" asp-append-version="true"></script>
