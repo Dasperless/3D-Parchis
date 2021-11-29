@@ -6,6 +6,7 @@ module.exports = class Ficha {
 		this.movimientos = 0;
 		this.posicion = 0;
 		this.estado = EstadoFicha.CASA;
+		this.comio = false;
 	}
 
     /**
@@ -32,6 +33,22 @@ module.exports = class Ficha {
 		this.estado = EstadoFicha.CASA;
 	}
 
+	/**
+	 * 
+	 * @returns {Boolean} true si la ficha comió o false en caso contrario
+	 */
+	haComido(){
+		return this.comio;
+	}
+
+	/**
+	 * Coloca la ficha en el pasillo.
+	 */
+	colocarPasillo() {
+		this.estado = EstadoFicha.PASILLO;
+		this.posicion = 0;
+	}
+	
     /**
      * Retorna la información de la ficha.
      * @returns {String} información de la ficha

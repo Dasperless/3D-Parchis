@@ -7,6 +7,7 @@ module.exports = class Parchis {
 	constructor() {
 		this.tablero = new Tablero();
 		this.jugadores = [];
+		this.turno = 1;
 	}
 
 	/**
@@ -22,6 +23,27 @@ module.exports = class Parchis {
 		}
 		return false;
 	}
+
+	/**
+	 * Retorna el jugador que tiene el turno
+	 * @param {String} nombre el nombre del jugador
+	 * @returns {Jugador} el jugador que tiene el turno
+	 */
+	obtenerJugador(){
+		var jugador = this.tablero[(turno-1)%this.tablero.length]
+		this.turno += 1;
+		return  jugador;
+	}
+
+
+	pasarTurno(){
+	   this.turno += 1;
+   }
+
+	retornarTurno(){
+	   var jugador = this.jugadores[(this.turno-1)%this.jugadores.length];
+	   return  jugador;
+   }	
 
 	/**
 	 * Ordena los jugadores en base al número de dado o el nombre
@@ -46,11 +68,9 @@ module.exports = class Parchis {
 		// Cambia el color de los jugadores según su nombre
 		this.jugadores = [];
         let color = 1;
-		console.log("Orden:",orden);
         orden.forEach(jugador => {
             jugador[0].establecerColor(color);
             this.jugadores.push(jugador[0]);
-			console.log("ColorJugador:",jugador[0].color);
             color += 1;
         });
 	}
@@ -73,7 +93,7 @@ module.exports = class Parchis {
 		if(a[0].nombre === b[0].nombre){
 			return 0;
 		}else{
-			return a[0].nombre < b[0].nombre ? 1 : -1;
+			return a[0].nombre < b[0].nombre ? -1 : 1;
 		}
 	}
 
@@ -82,7 +102,7 @@ module.exports = class Parchis {
 		if(a[1] === b[1]){
 			return 0;
 		}else{
-			return a[1] < b[1] ? 1 : -1;
+			return a[1] < b[1] ? -1 : 1;
 		}
 	}
 
@@ -93,13 +113,18 @@ module.exports = class Parchis {
 		this.ordenarJugadores();
 		while (!this.hayGanador()) {
 			this.jugadores.forEach(jugador => {
-				
 				var dado = jugador.tirarDado();
-				console.log("\nTurno de: " + jugador.nombre + " con dado: " + dado);
-				jugador.imprimirFichas();
+				// console.log("\nTurno de: " + jugador.nombre + " con dado: " + dado);
+				// jugador.imprimirFichas();
 				var ficha = jugador.elegirFicha(0);
 				this.moverFicha(jugador, ficha, dado);
-				this.tablero.imprimirTablero();
+
+				if(ficha.haComido()){
+					ficha.comio = false;	
+					var ficha = jugador.elegirFicha(0);
+					this.moverFicha(jugador, ficha, 20);
+				}
+				// this.tablero.imprimirTablero();
 			});
 		}		
 	}
@@ -135,7 +160,7 @@ module.exports = class Parchis {
 	verificarMovimiento(jugador, ficha, movimientos){
 		var posicionNueva;
 		if (ficha.estado === EstadoFicha.CASA){
-			posicionNueva = this.obtenerPosInicial(jugador)-1;
+			posicionNueva = this.obtenerPosInicial(jugador);
 		}else{
 			posicionNueva = ficha.posicion;
 		}
@@ -151,17 +176,38 @@ module.exports = class Parchis {
 	}
 
 	/**
+	 * Quita la ficha del tablero al iniciar el turno o cuando 
+	 * se muevw en el tablero
+	 * @param {Jugador} jugador El jugador que está jugando
+	 * @param {Ficha} ficha La ficha que se desea quitar
+	 */
+	quitarFichaTablero(jugador,ficha){
+		if (ficha.estado === EstadoFicha.TABLERO){	
+			this.tablero.obtenerCasilla(ficha.posicion).sacarFicha(ficha)
+		}else if(ficha.estado === EstadoFicha.PASILLO){
+			this.tablero.obtenerPasillo(jugador, ficha.posicion).sacarFicha(ficha)
+		}
+	}
+
+
+	/**
 	 * 
 	 * @param {Jugador} jugador El jugador actual
 	 * @param {Ficha} ficha Ficha que se desea mover
 	 * @param {Int} casillasAMover La cantidad de casillas que se desea mover
 	 */
 	moverFicha(jugador, ficha, casillasAMover){
+		
+		this.quitarFichaTablero(jugador, ficha);//Quita la ficha del tablero al iniciar el turno
+
+		//Verifica si el movimiento es válido
 		if(this.verificarMovimiento(jugador, ficha, casillasAMover)){
+			//Mueve la ficha en el tablero
 			for(let i=casillasAMover; i > 0; i--){
-				if(ficha.movimientos > 29){
+				if(ficha.movimientos > 63){
 					if (ficha.estado = EstadoFicha.TABLERO){
-						ficha.estado = EstadoFicha.PASILLO;
+						// ficha.estado = EstadoFicha.PASILLO;
+						ficha.colocarPasillo();
 					}
 					this.tablero.obtenerPasillo(jugador, ficha.posicion).colocarFicha(ficha);
 				}else if(ficha.estado === EstadoFicha.CASA){
@@ -172,11 +218,7 @@ module.exports = class Parchis {
 				}
 
 				if(i>1){
-					if (ficha.estado === EstadoFicha.TABLERO){	
-						this.tablero.obtenerCasilla(ficha.posicion).sacarFicha(ficha)
-					}else if(ficha.estado === EstadoFicha.PASILLO){
-						this.tablero.obtenerPasillo(jugador, ficha.posicion).sacarFicha(ficha)
-					}
+					this.quitarFichaTablero(jugador, ficha);
 				}
 
 			}
