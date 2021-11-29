@@ -21,7 +21,24 @@ let partidaGlobal;
             $("#tbodyJuego").html(html);
         }
         if (data.includes("juegoIniciado")) {
-            window.location.href = '../../Home/Juego/?idPartida=' + partidaGlobal + '&idJugador=' + $("#niknameInput").val() + '&turnoDe=' + objData.turnoDe;
+            //var results = objData.color.filter(function (nickname) { return objData.color.nickname === $("#niknameInput").val(); });
+            const resultado = objData.color.find(elemento => elemento.nickname === $("#niknameInput").val());
+
+            let color = "";
+            if (resultado.color === 1) {
+                color = "ffff00"
+            }
+            if (resultado.color === 2) {
+                color = "001fff"
+            }
+            if (resultado.color === 3) {
+                color = "ff0000"
+            }
+            if (resultado.color === 4) {
+                color = "0c9700"
+            }
+            console.log(resultado);
+            window.location.href = '../../Home/Juego/?idPartida=' + partidaGlobal + '&idJugador=' + $("#niknameInput").val() + '&turnoDe=' + objData.turnoDe + '&color=' + color;
 
         }
         //$("#creadorNombreJuegoServer").val(objData.nickname);

@@ -11,7 +11,9 @@
         }
         if (data.includes("movimientoFicha")) {
             setposicion(objData.idFicha, objData.posFicha);
-            $('#btnTirarDado').attr("disabled");
+            //$('#btnTirarDado').attr("disabled");
+            $("#btnTirarDado").attr('disabled', 'disabled');
+            $("#turnoDe").text(objData.turnoJugador);
             if ($("#identificacionJugadorText").text() === objData.turnoJugador) {
                 $('#btnTirarDado').removeAttr("disabled");
             }
@@ -72,9 +74,12 @@ $(document).ready(function () {
     const idPartida = getParameterByName("idPartida");
     const idJugador = getParameterByName("idJugador");
     const turnoDe = getParameterByName("turnoDe");
+    const color = getParameterByName("color");
+    console.log(color);
     $("#identificacionJuegoText").text(idPartida);
     $("#identificacionJugadorText").text(idJugador);
     $("#turnoDe").text(turnoDe);
+    $("#colorInput").val("#"+color);
 
     if (idJugador === turnoDe) {
         $('#btnTirarDado').removeAttr("disabled");

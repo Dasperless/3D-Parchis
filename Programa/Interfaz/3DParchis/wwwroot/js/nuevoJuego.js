@@ -24,7 +24,23 @@
         }
         if (data.includes("juegoIniciado")) {
             const nombrePartida = $("#nombreJuegoServer").val();
-            window.location.href = '../../Home/Juego/?idPartida=' + nombrePartida + '&idJugador=' + $("#creadorNombreJuegoServer").val() + '&turnoDe=' + objData.turnoDe;
+            const resultado = objData.color.find(elemento => elemento.nickname === $("#creadorNombreJuegoServer").val());
+
+            let color = "";
+            if (resultado.color === 1) {
+                color = "ffff00"
+            }
+            if (resultado.color === 2) {
+                color = "001fff"
+            }
+            if (resultado.color === 3) {
+                color = "ff0000"
+            }
+            if (resultado.color === 4) {
+                color = "0c9700"
+            }
+            console.log(resultado);
+            window.location.href = '../../Home/Juego/?idPartida=' + nombrePartida + '&idJugador=' + $("#creadorNombreJuegoServer").val() + '&turnoDe=' + objData.turnoDe + '&color=' + color;
         }
     }
 
