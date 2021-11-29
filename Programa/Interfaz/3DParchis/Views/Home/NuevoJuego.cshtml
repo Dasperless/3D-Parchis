@@ -104,17 +104,17 @@
         </div>
         <div class="col-md-4">
 
-            <button type="submit" class="btn btn-outline-success" style="margin-top: 31px; float: right; " disabled>
+            <button type="submit" class="btn btn-outline-success" style="margin-top: 31px; float: right; " disabled id="iniciarPartida" onclick="iniciarPartida()">
                 Iniciar Juego <i class='bx bx-check bx-burst-hover bx-border-circle'></i>
             </button>
-            <button type="submit" class="btn btn-outline-primary" style="margin-top: 31px; margin-right: 5px; float: right;">
+            @*<button type="submit" class="btn btn-outline-primary" style="margin-top: 31px; margin-right: 5px; float: right;">
                 Recargar <i class='bx bx-check bx-burst-hover bx-border-circle'></i>
-            </button>
+            </button>*@
         </div>
     </div>
 </div>
 
-<table border="1px" id="tableroPrincipal">
+<table border="1px" id="tableroPrincipal" hidden>
     <!-- 1 -->
     <tr>
         <td class="amarillo" colspan="7" rowspan="7"><img src="~/img/esquinaAmarilla.png" /></td>

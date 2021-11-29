@@ -1,12 +1,28 @@
-﻿(function () {
+﻿let ws;
+(function () {
     const sendBtn = document.querySelector('#btnCrearJuego');
-    let ws;
     const obtieneData = (data) => {
         console.log(data);
-        const objData = JSON.parse(data);
-        $("#creadorNombreJuegoServer").val(objData.nickname);
-        $("#nombreJuegoServer").val(objData.identificador);
-        $("#cantJugadorServer").val(objData.cantidadJugadoresUnidos);
+        let objData = (JSON.parse(data));
+        if (data.includes("crearPartida")) {
+            var index = 0;
+            console.log(objData);
+            objData = objData.reverse();
+            //if ($("#nombreJuegoServer").val()!=="") {
+            //    index = objData.map(partida => partida.identificador).indexOf($("#nombreJuegoServer").val());
+            //}
+            $("#creadorNombreJuegoServer").val(objData[index].nickname);
+            $("#nombreJuegoServer").val(objData[index].identificador);
+            $("#cantJugadorServer").val(objData[index].cantidadJugadoresUnidos);
+            console.log(objData[index].cantidadJugadoresUnidos);
+            console.log($("#cantidadJugadorJuegoInput").val());
+            const cantidadServer = (objData[index].cantidadJugadoresUnidos)*1;
+            const cantidadJuego = ($("#cantidadJugadorJuegoInput").val()) * 1;
+            if (cantidadServer === cantidadJuego) {
+                $('#iniciarPartida').removeAttr("disabled");
+            }
+
+        }
     }
 
 
@@ -66,3 +82,13 @@
 
     init();
 })();
+
+const iniciarPartida = () => {
+    const nombrePartida = $("#creadorNombreJuegoServer").val();
+    const jsonIniciarPartida = {
+        tipoMensaje: "iniciarPartida",
+        idPartida: $("#nombreJuegoServer").val()
+    }
+    ws.send(JSON.stringify(jsonIniciarPartida));
+    window.location.href = '../../Home/Juego/?idPartida=' + nombrePartida + '?idJugador =' + $("#creadorNombreJuegoServer").val();
+}

@@ -1,11 +1,12 @@
 ﻿let ws;
+let partidaGlobal;
 (function () {
     const sendBtn = document.querySelector('#buscarPartidas');
 /*    let ws;*/
     const obtieneData = (data) => {
         console.log(data);
         const objData = JSON.parse(data);
-        if (data.includes("partidaCreada")) {
+        if (data.includes("crearPartida")) {
             var html = "";
             for (var i = 0; i < objData.length; i++) {
                 html += "<tr>";
@@ -18,6 +19,10 @@
                 html += "</tr>";
             }
             $("#tbodyJuego").html(html);
+        }
+        if (data.includes("juegoIniciado")) {
+            window.location.href = '../../Home/Juego/?idPartida=' + partidaGlobal + '?idJugador =' + $("#niknameInput").val();
+
         }
         //$("#creadorNombreJuegoServer").val(objData.nickname);
         //$("#nombreJuegoServer").val(objData.identificador);
@@ -79,6 +84,7 @@
 
 const iniciarJuego = (idJuego) => {
     console.log(idJuego);
+    partidaGlobal = idJuego;
     const jsonUnirsePartida = {
         tipoMensaje: "unirsePartida",
         idPartida: idJuego,

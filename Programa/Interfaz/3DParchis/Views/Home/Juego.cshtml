@@ -77,6 +77,7 @@
         height: 30px;
         top: 65px;
         left: 20px;
+        cursor: pointer;
     }
     .ficha2 {
         position: absolute;
@@ -84,6 +85,7 @@
         height: 30px;
         top: 65px;
         left: 150px;
+        cursor: pointer;
     }
     .ficha3 {
         position: absolute;
@@ -91,6 +93,7 @@
         height: 30px;
         top: 155px;
         left: 80px;
+        cursor: pointer;
     }
 </style>
 <div class="text-center">
@@ -114,92 +117,92 @@
         <td class="amarillo" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaAmarilla.png" />
-                <img class="ficha1" src="~/img/fichaAmarilla.png" />
-                <img class="ficha2" src="~/img/fichaAmarilla.png" />
-                <img class="ficha3" src="~/img/fichaAmarilla.png" />
+                <img class="ficha1" src="~/img/fichaAmarilla.png" id="jugador0Ficha0Amarillo"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaAmarilla.png" id="jugador0Ficha1Amarillo"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaAmarilla.png" id="jugador0Ficha2Amarillo"onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
-        <td colspan="2">1</td>
-        <td class="gris" colspan="2">68</td>
-        <td colspan="2">67</td>
+        <td colspan="2" id="1pos">1</td>
+        <td class="gris" colspan="2"id="68pos">68</td>
+        <td colspan="2" id="67pos">67</td>
         <td class="verde" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaVerde.png" />
-                <img class="ficha1" src="~/img/fichaVerde.png" />
-                <img class="ficha2" src="~/img/fichaVerde.png" />
-                <img class="ficha3" src="~/img/fichaVerde.png" />
+                <img class="ficha1" src="~/img/fichaVerde.png" id="jugador1Ficha0Verde"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaVerde.png" id="jugador1Ficha1Verde"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaVerde.png" id="jugador1Ficha2Verde"onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
     </tr>
     <!-- 2 -->
     <tr>
-        <td colspan="2">2</td>
+        <td colspan="2" id="2pos">2</td>
         <td class="amarillo" colspan="2">-</td>
-        <td colspan="2">66</td>
+        <td colspan="2" id="66pos">66</td>
     </tr>
     <!-- 3 -->
     <tr>
-        <td colspan="2">3</td>
+        <td colspan="2" id="3pos">3</td>
         <td class="amarillo" colspan="2">-</td>
-        <td colspan="2">65</td>
+        <td colspan="2" id="65pos">65</td>
     </tr>
     <!-- 4 -->
     <tr>
-        <td colspan="2">4</td>
+        <td colspan="2" id="4pos">4</td>
         <td class="amarillo" colspan="2">-</td>
-        <td colspan="2">64</td>
+        <td colspan="2" id="64pos">64</td>
     </tr>
     <!-- 5 -->
     <tr>
-        <td class="amarillo" colspan="2">5</td>
+        <td class="amarillo" colspan="2" id="5pos">5</td>
         <td class="amarillo" colspan="2">-</td>
-        <td colspan="2" class="gris">63</td>
+        <td colspan="2" class="gris" id="63pos">63</td>
     </tr>
     <!-- 6 -->
     <tr>
-        <td colspan="2">6</td>
+        <td colspan="2" id="6pos">6</td>
         <td class="amarillo" colspan="2">-</td>
-        <td colspan="2">62</td>
+        <td colspan="2" id="62pos">62</td>
     </tr>
     <!-- 7 -->
     <tr>
-        <td colspan="2">7</td>
+        <td colspan="2" id="7pos">7</td>
         <td class="amarillo" colspan="2">-</td>
-        <td colspan="2">61</td>
+        <td colspan="2" id="61pos">61</td>
     </tr>
     <!-- 8 -->
     <!-- Primera línea justo debajo de los grandes -->
     <tr>
-        <td rowspan="2">16</td>
-        <td rowspan="2">15</td>
-        <td rowspan="2">14</td>
-        <td rowspan="2">13</td>
-        <td rowspan="2" class="gris">12</td>
-        <td rowspan="2">11</td>
-        <td rowspan="2">10</td>
+        <td rowspan="2" id="16pos">16</td>
+        <td rowspan="2"id="15pos">15</td>
+        <td rowspan="2" id="14pos">14</td>
+        <td rowspan="2" id="13pos">13</td>
+        <td rowspan="2" class="gris" id="12pos">12</td>
+        <td rowspan="2" id="11pos">11</td>
+        <td rowspan="2" id="10pos">10</td>
         <td id="vacio"></td>
-        <td>8</td>
+        <td id="8pos">8</td>
         <td>-</td>
         <td>-</td>
-        <td>60</td>
+        <td id="60pos">60</td>
         <td id="vacio"></td>
-        <td rowspan="2">58</td>
-        <td rowspan="2">57</td>
-        <td class="verde" rowspan="2">56</td>
-        <td rowspan="2">55</td>
-        <td rowspan="2">54</td>
-        <td rowspan="2">53</td>
-        <td rowspan="2">52</td>
+        <td rowspan="2" id="58pos">58</td>
+        <td rowspan="2" id="57pos">57</td>
+        <td class="verde" rowspan="2" id="56pos">56</td>
+        <td rowspan="2" id="55pos">55</td>
+        <td rowspan="2" id="54pos">54</td>
+        <td rowspan="2" id="53pos">53</td>
+        <td rowspan="2" id="52pos">52</td>
     </tr>
     <!-- 9 -->
     <tr>
-        <td>9</td>
+        <td id="9pos">9</td>
         <td colspan="4" rowspan="4"><img src="~/img/centro.png" /></td>
-        <td>59</td>
+        <td id="59pos">59</td>
     </tr>
     <!-- 10 -->
     <tr>
-        <td class="gris" rowspan="2">17</td>
+        <td class="gris" rowspan="2" id="17pos">17</td>
         <td class="azul" rowspan="2">|</td>
         <td class="azul" rowspan="2">|</td>
         <td class="azul" rowspan="2">|</td>
@@ -214,7 +217,7 @@
         <td class="verde" rowspan="2">|</td>
         <td class="verde" rowspan="2">|</td>
         <td class="verde" rowspan="2">|</td>
-        <td class="gris" rowspan="2">51</td>
+        <td class="gris" rowspan="2" id="51pos">51</td>
     </tr>
     <!-- 11 -->
     <tr>
@@ -223,30 +226,30 @@
     </tr>
     <!-- 12 -->
     <tr>
-        <td rowspan="2">18</td>
-        <td rowspan="2">19</td>
-        <td rowspan="2">20</td>
-        <td rowspan="2">21</td>
-        <td class="azul" rowspan="2">22</td>
-        <td rowspan="2">23</td>
-        <td rowspan="2">24</td>
-        <td>25</td>
-        <td>43</td>
-        <td rowspan="2">44</td>
-        <td rowspan="2">45</td>
-        <td rowspan="2" class="gris">46</td>
-        <td rowspan="2">47</td>
-        <td rowspan="2">48</td>
-        <td rowspan="2">49</td>
-        <td rowspan="2">50</td>
+        <td rowspan="2" id="18pos">18</td>
+        <td rowspan="2" id="19pos">19</td>
+        <td rowspan="2" id="20pos">20</td>
+        <td rowspan="2" id="21pos">21</td>
+        <td class="azul" rowspan="2" id="22pos">22</td>
+        <td rowspan="2" id="23pos">23</td>
+        <td rowspan="2" id="24pos">24</td>
+        <td id="25pos">25</td>
+        <td id="43pos">43</td>
+        <td rowspan="2" id="44pos">44</td>
+        <td rowspan="2" id="45pos">45</td>
+        <td rowspan="2" class="gris" id="46pos">46</td>
+        <td rowspan="2" id="47pos">47</td>
+        <td rowspan="2" id="48pos">48</td>
+        <td rowspan="2" id="49pos">49</td>
+        <td rowspan="2" id="50pos">50</td>
     </tr>
     <!-- 13 -->
     <tr>
         <td id="vacio"></td>
-        <td>26</td>
+        <td id="26pos">26</td>
         <td>-</td>
         <td>-</td>
-        <td>42</td>
+        <td id="42pos">42</td>
         <td id="vacio"></td>
     </tr>
     <!-- 14 -->
@@ -254,60 +257,60 @@
         <td class="azul" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaAzul.png" />
-                <img class="ficha1" src="~/img/fichaAzul.png" />
-                <img class="ficha2" src="~/img/fichaAzul.png" />
-                <img class="ficha3" src="~/img/fichaAzul.png" />
+                <img class="ficha1" src="~/img/fichaAzul.png" id="jugador2Ficha0Azul"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaAzul.png" id="jugador2Ficha1Azul"onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaAzul.png" id="jugador2Ficha2Azul"onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
-        <td colspan="2">27</td>
+        <td colspan="2" id="27pos">27</td>
         <td class="rojo" colspan="2">-</td>
-        <td colspan="2">41</td>
+        <td colspan="2" id="41pos">41</td>
         <td class="rojo" colspan="7" rowspan="7">
             <div class="parent">
                 <img class="image1" src="~/img/esquinaRoja.png" />
-                <img class="ficha1" src="~/img/fichaRoja.png" />
-                <img class="ficha2" src="~/img/fichaRoja.png" />
-                <img class="ficha3" src="~/img/fichaRoja.png" />
+                <img class="ficha1" src="~/img/fichaRoja.png" id="jugador3Ficha0Rojo" onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha2" src="~/img/fichaRoja.png" id="jugador3Ficha1Rojo" onclick="getFichaMovimiento(this.id)"/>
+                <img class="ficha3" src="~/img/fichaRoja.png" id="jugador3Ficha2Rojo" onclick="getFichaMovimiento(this.id)"/>
             </div>
         </td>
     </tr>
     <!-- 15 -->
     <tr>
-        <td colspan="2">28</td>
+        <td colspan="2" id="28pos">28</td>
         <td class="rojo" colspan="2">-</td>
-        <td colspan="2">40</td>
+        <td colspan="2" id="40pos">40</td>
     </tr>
     <!-- 16 -->
     <tr>
-        <td colspan="2" class="gris">29</td>
+        <td colspan="2" class="gris" id="29pos">29</td>
         <td class="rojo" colspan="2">-</td>
-        <td class="rojo" colspan="2">39</td>
+        <td class="rojo" colspan="2" id="39pos">39</td>
     </tr>
     <!-- 17 -->
     <tr>
-        <td colspan="2">30</td>
+        <td colspan="2" id="30pos">30</td>
         <td class="rojo" colspan="2">-</td>
-        <td colspan="2">38</td>
+        <td colspan="2" id="38pos">38</td>
     </tr>
     <!-- 18 -->
     <tr>
-        <td colspan="2">31</td>
+        <td colspan="2" id="31pos">31</td>
         <td class="rojo" colspan="2">-</td>
-        <td colspan="2">37</td>
+        <td colspan="2" id="37pos">37</td>
     </tr>
     <!-- 19 -->
     <tr>
-        <td colspan="2">32</td>
+        <td colspan="2" id="32pos">32</td>
         <td class="rojo" colspan="2">-</td>
-        <td colspan="2">36</td>
+        <td colspan="2" id="36pos">36</td>
     </tr>
     <!-- 20 -->
     <tr>
-        <td colspan="2">33</td>
+        <td colspan="2" id="33pos">33</td>
         <td class="gris" colspan="2">34</td>
-        <td colspan="2">35</td>
+        <td colspan="2" id="5pos">35</td>
     </tr>
 
 </table>
 
-@*<script src="~/js/unirseJuego.js" asp-append-version="true"></script>*@
+<script src="~/js/juego.js" asp-append-version="true"></script>
