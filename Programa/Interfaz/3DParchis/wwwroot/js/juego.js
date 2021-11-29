@@ -11,6 +11,11 @@
         }
         if (data.includes("movimientoFicha")) {
             setposicion(objData.idFicha, objData.posFicha);
+
+            //$('#' + objData.idFicha).css('visibility', 'hidden');
+            const elementoPadre = $('#' + objData.idFicha).parent();
+            console.log(elementoPadre);
+            $('#' + objData.idFicha).remove();
             //$('#btnTirarDado').attr("disabled");
             $("#btnTirarDado").attr('disabled', 'disabled');
             $("#turnoDe").text(objData.turnoJugador);
@@ -91,7 +96,7 @@ $(document).ready(function () {
 });
 
 const getFichaMovimiento = (idFicha) => {
-    console.log(idFicha);
+    //console.log(idFicha);
     /*const pos = "14";*/
     const jsonFichaMover = {
         tipoMensaje: "moverFicha",
@@ -99,12 +104,18 @@ const getFichaMovimiento = (idFicha) => {
         idFicha: idFicha,
         dado: $("#resDado").text()
     }
+    //$('#' + idFicha).attr('hidden', true);
+    console.log("Fichadadsdas: ", idFicha);
+    //$('#' + idFicha).remove();
+
+
     ws.send(JSON.stringify(jsonFichaMover));
     //setposicion(idFicha,34);
 }
 
 const setposicion = (idFicha, pos) => {
-    const color = idFicha.split(",")[1];
+    const color = idFicha.split("x")[1];
+    //$("." + idFicha).hide();
     var html = '<img class="fichaEncelda" src="/img/ficha' + color + '.png" id="' + idFicha + '" onclick="getFichaMovimiento(this.id)" />';
     $("#" + pos + "pos").html(html);
 }
