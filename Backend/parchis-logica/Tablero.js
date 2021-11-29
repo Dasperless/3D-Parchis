@@ -41,7 +41,7 @@ module.exports = class Tablero {
      * @returns {Casilla} La casilla en la posicion indicada.
      */
     obtenerCasilla(posicion){
-        console.log("Casilla:",this.tablero[posicion]);
+        // console.log("Casilla:",this.tablero[posicion]);
         return this.tablero[(posicion-1)%this.tablero.length];
     }
 

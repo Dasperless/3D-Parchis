@@ -23,6 +23,7 @@ wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
     var dataString = data.toString(); //buffer a string
     var datosObj = JSON.parse(dataString); //string a JSON
+    var datosTemp;
 
     // Manejo de datos e informacion al recibir mensajes
     if(datosObj.tipoMensaje === 'crearPartida'){
@@ -30,20 +31,31 @@ wss.on('connection', function connection(ws) {
       //  datosObj = partidas[partidas.length-1];
        console.log(datosObj);
     }
-
-
     else if(datosObj.tipoMensaje === 'unirsePartida'){
       unirJugadorPartida(datosObj);
     }
-
     else if(datosObj.tipoMensaje === 'verRanking'){
       // servidorPython.ranking(datosObj);
     }
-
     else if(datosObj.tipoMensaje === 'iniciarPartida'){
         // iniciarPartidaLogica
+       
+        ordenarJugadores();
+        iniciarPartidaLogica();
     }
-
+    else if(datosObj.tipoMensaje === 'jugandoPartida'){
+      // servidorPython.ranking(datosObj);
+    }
+    else if(datosObj.tipoMensaje === 'tirarDado'){
+      // servidorPython.ranking(datosObj);
+      
+    }
+    else if(datosObj.tipoMensaje === 'moverFicha'){
+      // servidorPython.ranking(datosObj);
+      datosTemp = moverFicha(datosObj);
+      
+    }
+    
    
 
 
@@ -70,6 +82,12 @@ wss.on('connection', function connection(ws) {
       else if(datosObj.tipoMensaje === 'iniciarPartida'){
         enviarPartidaIniciada(client,datosObj);
       }
+      else if(datosObj.tipoMensaje === 'tirarDado'){
+        enviarResultadoDado(client,datosObj);
+      }
+      else if(datosObj.tipoMensaje === 'moverFicha'){
+        enviarDatosFicha(client,datosTemp);
+      }
       
       
     })
@@ -85,12 +103,47 @@ server.listen(port, function() {
 // ****************************************************************************************
 // Funciones de mensajeria 
 
+function enviarDatosFicha(socketClient,datosJson){
+  socketClient.send(JSON.stringify(datosJson));
+}
+
+
+function enviarResultadoDado(socketClient,datosJson){
+  var resDado = tirarDado(datosJson);
+  var resultadoDado = 4;
+  const resultado = {
+    tipoMensaje : 'resultadoDado',
+    nickname : datosJson.nickname,
+    resultadoDado: resDado
+  }
+  socketClient.send(JSON.stringify(resultado));
+}
+
+
+
 function enviarPartidaIniciada(socketClient,datosJson){
   var idPartida = datosJson.idPartida;
   var partida = buscarPartida(idPartida);
+  var jugadores = partidaParchis.jugadores;
+  var colores = [];
+
+  for (let i = 0; i < partidaParchis.jugadores.length; i++) {
+    const jugador = partidaParchis.jugadores[i];
+
+    
+
+    let objeto = {
+      nickname: jugador.nombre,
+      color: jugador.color
+    }
+    colores.push(objeto);
+  }
+
   const datosPartida = {
     tipoMensaje: "juegoIniciado",
-    idPartida: idPartida
+    idPartida: idPartida,
+    turnoDe: jugadores[0].nombre,
+    color: colores
   }
   socketClient.send(JSON.stringify(datosPartida));
 }
@@ -105,6 +158,8 @@ function enviarDatosPartida(socketClient,datosJson){
     var partida = buscarPartida(idPartida);
     socketClient.send(JSON.stringify(partida));
 }
+
+
 
 function enviarPartidas(socketClient){
   // partidas[0].tipoMensaje = 'totalPartidas';
@@ -144,7 +199,7 @@ function unirJugadorPartida(datosJson){
     partida.cantidadJugadoresUnidos = partida.cantidadJugadoresUnidos*1;
     partida.cantidadJugadoresUnidos+=1;
     
-    // unirJugadorPartidaLogica(nombreJugador); // une un jugador a la clase Parchis
+    unirJugadorPartidaLogica(nombreJugador); // une un jugador a la clase Parchis
 
     console.log("Datos Partida: " ,partida);
     
@@ -153,10 +208,15 @@ function unirJugadorPartida(datosJson){
 
 // Funcion encargada de crear una nueva partida y almacenarla en la lista de partidas
 function crearNuevaPartida(datosJson){
+  partidaParchis = new Parchis();
   var numeroRandom = Math.floor(Math.random() * 10000);
   var idPartida = numeroRandom + datosJson.nickname ;
   datosJson.identificador = idPartida;
   partidas.push(datosJson); // agrega nueva partida a la lista
+
+  var nombre = datosJson.nickname;
+
+  unirJugadorPartidaLogica(nombre);
   // console.log(partidas);
 }
 
@@ -166,14 +226,68 @@ function crearNuevaPartida(datosJson){
 // *************************************************************************************************
 // Funciones de manejo de objetos y logica
 
+
+function moverFicha(datosJson){
+
+  // console.log("Turno: ",partidaParchis.turno);
+  var dado = datosJson.dado;
+  var idFicha = datosJson.idFicha.slice(-1);
+  var jugador = partidaParchis.retornarTurno();
+  var ficha = jugador.fichas[idFicha];
+  partidaParchis.moverFicha(jugador,ficha,dado);
+
+  var posFicha = ficha.posicion;
+
+  partidaParchis.pasarTurno();
+  // console.log("turno nuevo: ",partidaParchis.turno);
+  var jugadorNuevoTurno = partidaParchis.retornarTurno();
+
+
+  var turnoNuevo = jugadorNuevoTurno.nombre;
+  // console.log("Jugador nuevo turno: ",turnoNuevo);
+  
+  const datos = {
+    tipoMensaje: 'movimientoFicha',
+    idFicha: datosJson.idFicha,
+    posFicha: posFicha,
+    turnoJugador: turnoNuevo
+  }
+
+  console.log("Datos enviados en enviarFicha: ",datos);
+
+  console.log("Imprimiendo tablero: " );
+  partidaParchis.tablero.imprimirTablero();
+  return datos;
+  // enviarDatosFicha(socketClient,datos);
+
+
+}
+
+
+function tirarDado(datosJson){
+  var nombre = datosJson.nickname;
+  var jugador = partidaParchis.retornarTurno();
+  var resDado = jugador.tirarDado();
+  return resDado;
+
+}
+
+
 function unirJugadorPartidaLogica(nombre){
   partidaParchis.agregarJugador(nombre);
-  console.log("Jugadores en partida(Clase parchis):  " , partidaParchis.jugadores);
-  iniciarPartidaLogica();
+  // console.log("Jugadores en partida(Clase parchis):  " , partidaParchis.jugadores);
+  // iniciarPartidaLogica();
+}
+
+
+function ordenarJugadores(){
+  partidaParchis.ordenarJugadores();
 }
 
 
 // Inicia partida a nivel logico
 function iniciarPartidaLogica(){
-  partidaParchis.iniciarPartida();
+  // partidaParchis.iniciarPartida();
+
+
 }

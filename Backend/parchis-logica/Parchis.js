@@ -7,6 +7,7 @@ module.exports = class Parchis {
 	constructor() {
 		this.tablero = new Tablero();
 		this.jugadores = [];
+		this.turno = 1;
 	}
 
 	/**
@@ -149,6 +150,35 @@ module.exports = class Parchis {
 		return true;
 
 	}
+
+	/**
+     * Retorna el jugador que tiene el turno
+     * @param {String} nombre el nombre del jugador
+     * @returns {Jugador} el jugador que tiene el turno
+     */
+	 pasarTurno(){
+        // var jugador = this.jugadores[(turno-1)%this.jugadores.length];
+        this.turno += 1;
+        // return  jugador;
+    }
+
+
+	/**
+     * Retorna el jugador que tiene el turno
+     * @param {String} nombre el nombre del jugador
+     * @returns {Jugador} el jugador que tiene el turno
+     */
+	 retornarTurno(){
+		 
+        var jugador = this.jugadores[(this.turno-1)%this.jugadores.length];
+		// console.log("Turno de dario: ",this.turno);
+		// console.log("Jugador de dario: ",jugador);
+        // turno += 1;
+        return  jugador;
+    }
+
+
+
 
 	/**
 	 * 

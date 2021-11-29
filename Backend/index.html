@@ -73,6 +73,19 @@
         idPartida: "id"
       }
 
+      const jsonTirarDado = {
+        tipoMensaje:"tirarDado",
+        nickname: "id",
+
+      }
+
+      const jsonFichaMover = {
+        tipoMensaje:"moverFicha",
+        nickname: "id",
+        idFicha: "id",
+        dado: "dado"
+      }
+
 
       ws.send(JSON.stringify(jsonUnirsePartida));
       showMessage(JSON.stringify(jsonUnirsePartida));
