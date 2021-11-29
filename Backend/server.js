@@ -24,9 +24,10 @@ wss.on('connection', function connection(ws) {
     var dataString = data.toString(); //buffer a string
     var datosObj = JSON.parse(dataString); //string a JSON
 
+    // Manejo de datos e informacion al recibir mensajes
     if(datosObj.tipoMensaje === 'crearPartida'){
        crearNuevaPartida(datosObj);
-       datosObj = partidas[partidas.length-1];
+      //  datosObj = partidas[partidas.length-1];
        console.log(datosObj);
     }
 
@@ -39,22 +40,35 @@ wss.on('connection', function connection(ws) {
       // servidorPython.ranking(datosObj);
     }
 
+    else if(datosObj.tipoMensaje === 'iniciarPartida'){
+        // iniciarPartidaLogica
+    }
+
    
+
 
     wss.clients.forEach(function each(client) {
       // if (client !== ws && client.readyState === WebSocket.OPEN) {
         
       // }
+
+      // Manejo de envio de informacion con respecto a un mensaje especifico
       if(datosObj.tipoMensaje === 'crearPartida'){
-        datosObj.tipoMensaje = 'partidaCreada';
-        enviarPartidaNueva(client,datosObj);
+        // datosObj.tipoMensaje = 'nuevoJuego';
+        // var partida = partidas[partidas.length-1];
+        // enviarPartidaNueva(client,partida);
+        enviarPartidas(client);
       }
       else if(datosObj.tipoMensaje === 'unirsePartida'){
-        datosObj.tipoMensaje = 'unirsePartida';
-        enviarDatosPartida(client,datosObj);
+        // datosObj.tipoMensaje = 'unirsePartida';
+        // enviarDatosPartida(client,datosObj);
+        enviarPartidas(client);
       }
       else if(datosObj.tipoMensaje === 'getPartidas'){
         enviarPartidas(client);
+      }
+      else if(datosObj.tipoMensaje === 'iniciarPartida'){
+        enviarPartidaIniciada(client,datosObj);
       }
       
       
@@ -71,6 +85,17 @@ server.listen(port, function() {
 // ****************************************************************************************
 // Funciones de mensajeria 
 
+function enviarPartidaIniciada(socketClient,datosJson){
+  var idPartida = datosJson.idPartida;
+  var partida = buscarPartida(idPartida);
+  const datosPartida = {
+    tipoMensaje: "juegoIniciado",
+    idPartida: idPartida
+  }
+  socketClient.send(JSON.stringify(datosPartida));
+}
+
+
 function enviarPartidaNueva(socketClient,datosJson){
   socketClient.send(JSON.stringify(datosJson));
 }
@@ -82,6 +107,7 @@ function enviarDatosPartida(socketClient,datosJson){
 }
 
 function enviarPartidas(socketClient){
+  // partidas[0].tipoMensaje = 'totalPartidas';
   socketClient.send(JSON.stringify(partidas));
 
 }
@@ -118,7 +144,7 @@ function unirJugadorPartida(datosJson){
     partida.cantidadJugadoresUnidos = partida.cantidadJugadoresUnidos*1;
     partida.cantidadJugadoresUnidos+=1;
     
-    unirJugadorPartidaLogica(nombreJugador); // une un jugador a la clase Parchis
+    // unirJugadorPartidaLogica(nombreJugador); // une un jugador a la clase Parchis
 
     console.log("Datos Partida: " ,partida);
     

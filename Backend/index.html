@@ -68,6 +68,11 @@
         nickname:"nombre"
       }
 
+      const jsonIniciarPartida = {
+        tipoMensaje:"iniciarPartida",
+        idPartida: "id"
+      }
+
 
       ws.send(JSON.stringify(jsonUnirsePartida));
       showMessage(JSON.stringify(jsonUnirsePartida));

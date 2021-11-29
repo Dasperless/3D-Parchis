@@ -1,39 +1,42 @@
-const EstadoFicha = require('./EstadoFicha')
-
-// const EstadoFicha = {
-//     CASA: 0,
-//     TABLERO : 1,
-//     PASILLO : 2,
-//     GANO : 3
-// }
-
+const EstadoFicha = require("./EstadoFicha");
 
 module.exports = class Ficha {
-    constructor(color = null){
-        
-        this.color = color; 
-        this.movimientos = 0;
-        this.posicion = 0;
-        this.estado = EstadoFicha.CASA;
-    }
+	constructor(color = null) {
+		this.color = color;
+		this.movimientos = 0;
+		this.posicion = 0;
+		this.estado = EstadoFicha.CASA;
+	}
 
-    sumarMovimientos(){
-        this.movimientos +=1;
-    }
+    /**
+     * Suma un movimiento a la ficha
+     */
+	sumarMovimientos() {
+		this.movimientos += 1;
+	}
 
-    cambiarPosicion(nuevaPos){
-        this.posicion = nuevaPos;
-    }
+    /**
+     * Cambia la posicion de la ficha.
+     * @param {Int} nuevaPos Nueva posición de la ficha
+     */
+	cambiarPosicion(nuevaPos) {
+		this.posicion = nuevaPos;
+	}
 
-    regresarCasa(){
-        this.posicion = 0;
-        this.movimientos =0;
-        this.estado = EstadoFicha.CASA;
-    }
+    /**
+     * Regresa una ficha a su casa.
+     */
+	regresarCasa() {
+		this.posicion = 0;
+		this.movimientos = 0;
+		this.estado = EstadoFicha.CASA;
+	}
 
-    toString(){
-        console.log("Estado: ",this.estado,"Posicion: "+ this.movimientos);
-    }
-
-}
-
+    /**
+     * Retorna la información de la ficha.
+     * @returns {String} información de la ficha
+     */
+	toString() {
+		return "Estado: " + this.estado + " Posicion: " + this.movimientos;
+	}
+};
