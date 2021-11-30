@@ -164,7 +164,7 @@ module.exports = class Parchis {
 		}else{
 			posicionNueva = ficha.posicion;
 		}
-
+		
 		for(let i = 0; i < movimientos; i++){
 			if (!this.tablero.obtenerCasilla(posicionNueva).sePuedeColocarFicha()){
 				return false;
@@ -199,7 +199,9 @@ module.exports = class Parchis {
 	moverFicha(jugador, ficha, casillasAMover){
 		
 		this.quitarFichaTablero(jugador, ficha);//Quita la ficha del tablero al iniciar el turno
-
+		if(ficha.haComido()){
+			ficha.comio = false;
+		}
 		//Verifica si el movimiento es válido
 		if(this.verificarMovimiento(jugador, ficha, casillasAMover)){
 			//Mueve la ficha en el tablero

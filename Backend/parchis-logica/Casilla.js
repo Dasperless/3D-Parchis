@@ -16,7 +16,8 @@ module.exports = class Casilla {
 			if (this.tipo === TipoCasilla.NORMAL && this.fichas[0].color !== ficha.color) {
 				var fichaTemp = this.fichas.pop();
 				fichaTemp.regresarCasa();
-				console.log("Se comio una ficha");
+				console.log("Ficha: ",ficha.color, " se comio a ficha ", fichaTemp.color);
+				ficha.comio();
 			}
 		}
         ficha.sumarMovimientos();

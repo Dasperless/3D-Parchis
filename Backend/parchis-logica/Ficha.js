@@ -34,11 +34,18 @@ module.exports = class Ficha {
 	}
 
 	/**
-	 * 
+	 * Retorna si ha comido la ficha.
 	 * @returns {Boolean} true si la ficha comió o false en caso contrario
 	 */
 	haComido(){
 		return this.comio;
+	}
+
+	/**
+	 * Cambia a true si la ficha comió.
+	 */
+	comio(){
+		this.comio = true;
 	}
 
 	/**
