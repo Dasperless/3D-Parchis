@@ -1,6 +1,4 @@
 const TipoCasilla = require("./TipoCasilla");
-
-
 module.exports = class Casilla {
 	constructor(tipo, color = null, numero = null) {
 		this.tipo = tipo;
@@ -14,9 +12,9 @@ module.exports = class Casilla {
      * @param {Ficha} ficha La ficha a colocar.
      */
 	colocarFicha(ficha) {
-		if (this.fichas.length > 0) {
-			if (this.tipo === TipoCasilla.NORMAL) {
-                var fichaTemp = this.fichas.pop();
+		if (this.fichas.length > 0 && this.fichas.length < 2) {
+			if (this.tipo === TipoCasilla.NORMAL && this.fichas[0].color !== ficha.color) {
+				var fichaTemp = this.fichas.pop();
 				fichaTemp.regresarCasa();
 				console.log("Se comio una ficha");
 			}

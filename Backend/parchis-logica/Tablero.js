@@ -33,6 +33,12 @@ module.exports = class Tablero {
                 this.tablero.push(new Casilla(TipoCasilla.NORMAL,null,i))
             }
         }
+        for (let i =0; i<8; i++){
+            this.pasilloAmarillo.push(new Casilla(TipoCasilla.PASILLO,Color.AMARILLO,i));
+            this.pasilloAzul.push(new Casilla(TipoCasilla.PASILLO,Color.AZUL,i));
+            this.pasilloRojo.push(new Casilla(TipoCasilla.PASILLO,Color.ROJO,i));
+            this.pasilloVerde.push(new Casilla(TipoCasilla.PASILLO,Color.VERDE,i));
+        }
     }
 
     /**
@@ -41,10 +47,8 @@ module.exports = class Tablero {
      * @returns {Casilla} La casilla en la posicion indicada.
      */
     obtenerCasilla(posicion){
-        // console.log("Casilla:",this.tablero[posicion]);
         return this.tablero[(posicion-1)%this.tablero.length];
     }
-
 
     /**
      * Devuelve el pasillo de un color indicado
@@ -71,7 +75,7 @@ module.exports = class Tablero {
      */
     obtenerPasillo(jugador, posicion){
         let lista = this.obtenerListaPasillo(jugador.color);
-        if(lista.length < lista.length){
+        if(posicion < lista.length){
             return lista[posicion];
         }
     }
@@ -99,7 +103,6 @@ module.exports = class Tablero {
      * Imprime el tablero en consola
      */
     imprimirTablero(){
-        
         for(let i=0; i<this.tablero.length; i++){
             if (this.tablero[i].fichas.length > 0){
                 this.tablero[i].fichas.forEach(ficha => {

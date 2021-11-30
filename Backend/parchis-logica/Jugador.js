@@ -37,6 +37,7 @@ module.exports = class Jugador {
         return true;
     }
 
+    
 
     crearFicha(cantidad){
         for(var i=0 ; i<cantidad; i++){
