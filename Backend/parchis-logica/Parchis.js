@@ -205,11 +205,16 @@ module.exports = class Parchis {
 			//Mueve la ficha en el tablero
 			for(let i=casillasAMover; i > 0; i--){
 				if(ficha.movimientos > 63){
-					if (ficha.estado = EstadoFicha.TABLERO){
-						// ficha.estado = EstadoFicha.PASILLO;
+					if (ficha.estado === EstadoFicha.TABLERO){
 						ficha.colocarPasillo();
 					}
-					this.tablero.obtenerPasillo(jugador, ficha.posicion).colocarFicha(ficha);
+					var pasillo = this.tablero.obtenerPasillo(jugador, ficha.posicion);
+					if(pasillo !== undefined){
+						pasillo.colocarFicha(ficha);
+					}else{
+						ficha.estado = EstadoFicha.GANO;
+					}
+					console.log(this.tablero.obtenerPasillo(jugador, ficha.posicion));
 				}else if(ficha.estado === EstadoFicha.CASA){
 					ficha.estado = EstadoFicha.TABLERO;
 					this.tablero.obtenerCasilla(this.obtenerPosInicial(jugador)).colocarFicha(ficha);

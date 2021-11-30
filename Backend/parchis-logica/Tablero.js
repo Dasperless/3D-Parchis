@@ -33,7 +33,7 @@ module.exports = class Tablero {
                 this.tablero.push(new Casilla(TipoCasilla.NORMAL,null,i))
             }
         }
-        for (let i =1; i<9; i++){
+        for (let i =0; i<8; i++){
             this.pasilloAmarillo.push(new Casilla(TipoCasilla.PASILLO,Color.AMARILLO,i));
             this.pasilloAzul.push(new Casilla(TipoCasilla.PASILLO,Color.AZUL,i));
             this.pasilloRojo.push(new Casilla(TipoCasilla.PASILLO,Color.ROJO,i));
@@ -75,7 +75,7 @@ module.exports = class Tablero {
      */
     obtenerPasillo(jugador, posicion){
         let lista = this.obtenerListaPasillo(jugador.color);
-        if(lista.length < lista.length){
+        if(posicion < lista.length){
             return lista[posicion];
         }
     }
