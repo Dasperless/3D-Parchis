@@ -10,12 +10,23 @@
             }
         }
         if (data.includes("movimientoFicha")) {
-            setposicion(objData.idFicha, objData.posFicha);
+/*            setposicion(objData.idFicha, objData.posFicha);*/
 
             //$('#' + objData.idFicha).css('visibility', 'hidden');
             const elementoPadre = $('#' + objData.idFicha).parent();
             console.log(elementoPadre);
+            let totalelementoEnTd = $("#" + elementoPadre.prevObject[0].id).siblings().length;
+            console.log($("#" + elementoPadre.prevObject[0].id));
+            console.log(totalelementoEnTd);
+            const idPadre = elementoPadre[0].id;
+            if (idPadre !== "" && totalelementoEnTd===0) {
+                var id = idPadre.substring(0, idPadre.length - 3);
+                console.log("id==>", id);
+                $("#" + idPadre).text(id);
+            }
+            //console.log(elementoPadre);
             $('#' + objData.idFicha).remove();
+            setposicion(objData.idFicha, objData.posFicha);
             //$('#btnTirarDado').attr("disabled");
             $("#btnTirarDado").attr('disabled', 'disabled');
             $("#turnoDe").text(objData.turnoJugador);
@@ -80,7 +91,7 @@ $(document).ready(function () {
     const idJugador = getParameterByName("idJugador");
     const turnoDe = getParameterByName("turnoDe");
     const color = getParameterByName("color");
-    console.log(color);
+    //console.log(color);
     $("#identificacionJuegoText").text(idPartida);
     $("#identificacionJugadorText").text(idJugador);
     $("#turnoDe").text(turnoDe);
@@ -105,7 +116,7 @@ const getFichaMovimiento = (idFicha) => {
         dado: $("#resDado").text()
     }
     //$('#' + idFicha).attr('hidden', true);
-    console.log("Fichadadsdas: ", idFicha);
+    //console.log("Fichadadsdas: ", idFicha);
     //$('#' + idFicha).remove();
 
 
@@ -116,6 +127,14 @@ const getFichaMovimiento = (idFicha) => {
 const setposicion = (idFicha, pos) => {
     const color = idFicha.split("x")[1];
     //$("." + idFicha).hide();
+    var elementoExistente = $("#" + pos + "pos").find('img');
+    console.log(elementoExistente, "CANTIDAD", elementoExistente.length);
     var html = '<img class="fichaEncelda" src="/img/ficha' + color + '.png" id="' + idFicha + '" onclick="getFichaMovimiento(this.id)" />';
-    $("#" + pos + "pos").html(html);
+    if (elementoExistente.length === 0 || (elementoExistente[0].id).split('x')[1] !== color) {
+        $("#" + pos + "pos").html(html);
+    }
+    else {
+        $("#" + pos + "pos").append(html);
+    }
+    
 }
