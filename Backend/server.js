@@ -13,9 +13,12 @@ const Casilla = require('./parchis-logica/Casilla');
 const Jugador = require('./parchis-logica/Jugador');
 const Parchis = require('./parchis-logica/Parchis');
 
+
+
+
 let partidas = [] // lista de partidas
 var partidaParchis = new Parchis();
-
+let ranking = require('./ranking.json')
 
 
 // WebSocket server
@@ -87,6 +90,9 @@ wss.on('connection', function connection(ws) {
       }
       else if(datosObj.tipoMensaje === 'moverFicha'){
         enviarDatosFicha(client,datosTemp);
+      }
+      else if(datosObj.tipoMensaje === 'estadisticas'){
+        datosEstadistica(client,datosObj)
       }
       
       
@@ -167,10 +173,40 @@ function enviarPartidas(socketClient){
 
 }
 
+function enviarDatosEstadistica(socketClient,datos){
+  socketClient.send(JSON.stringify(datos));
+}
+
+
+function enviarDatosRanking(socketClient){
+  socketClient.send(JSON.stringify(ranking));
+}
 
 
 // *****************************************************************************************
 // Funciones de manejo de datos 
+
+
+
+
+
+function datosEstadistica(socketClient,datosJson){
+  var identificadorPartida = datosJson.idPartida;
+  var partida = buscarPartida(identificadorPartida);
+
+  const datosPartida = {
+    idPartida: identificadorPartida,
+    creador: partida.nickname,
+    jugadores: partida.listaJugadores
+  }
+
+  enviarDatosEstadistica(socketClient,datosPartida);
+
+
+}
+
+
+
 
 // Funcion para buscar una partida especifica
 function buscarPartida(identificador){
@@ -245,6 +281,9 @@ function moverFicha(datosJson){
 
   var turnoNuevo = jugadorNuevoTurno.nombre;
   // console.log("Jugador nuevo turno: ",turnoNuevo);
+
+  
+
   
   const datos = {
     tipoMensaje: 'movimientoFicha',

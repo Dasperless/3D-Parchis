@@ -86,6 +86,11 @@
         dado: "dado"
       }
 
+      const jsonEstadisticas = {
+        tipoMensaje: "estadisticas",
+        idPartida: "id"
+      }
+
 
       ws.send(JSON.stringify(jsonUnirsePartida));
       showMessage(JSON.stringify(jsonUnirsePartida));
