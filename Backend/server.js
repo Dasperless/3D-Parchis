@@ -94,6 +94,10 @@ wss.on('connection', function connection(ws) {
       else if(datosObj.tipoMensaje === 'estadisticas'){
         datosEstadistica(client,datosObj)
       }
+      else if(datosObj.tipoMensaje === 'verRanking'){
+        // servidorPython.ranking(datosObj);
+        enviarDatosRanking(client);
+      }
       
       
     })
@@ -192,9 +196,11 @@ function enviarDatosRanking(socketClient){
 
 function datosEstadistica(socketClient,datosJson){
   var identificadorPartida = datosJson.idPartida;
+  console.log("idPartida:",identificadorPartida);
   var partida = buscarPartida(identificadorPartida);
 
   const datosPartida = {
+    tipoMensaje: 'datosEstadistica',
     idPartida: identificadorPartida,
     creador: partida.nickname,
     jugadores: partida.listaJugadores
@@ -270,11 +276,21 @@ function moverFicha(datosJson){
   var idFicha = datosJson.idFicha.slice(-1);
   var jugador = partidaParchis.retornarTurno();
   var ficha = jugador.fichas[idFicha];
+
+
   partidaParchis.moverFicha(jugador,ficha,dado);
+
+  // if(ficha.comioFicha()){
+  //   console.log("Entra en comio ficha")
+  //   dado = 20;
+  // }else{
+    partidaParchis.pasarTurno();
+  // }
+
 
   var posFicha = ficha.posicion;
 
-  partidaParchis.pasarTurno();
+  // partidaParchis.pasarTurno();
   // console.log("turno nuevo: ",partidaParchis.turno);
   var jugadorNuevoTurno = partidaParchis.retornarTurno();
 
@@ -282,14 +298,22 @@ function moverFicha(datosJson){
   var turnoNuevo = jugadorNuevoTurno.nombre;
   // console.log("Jugador nuevo turno: ",turnoNuevo);
 
+  var colorPasillo = jugador.color;
   
+  var pasillo= 0 ;
 
-  
+  if(ficha.movimientos >= 64){
+    pasillo = 1
+  }
+
   const datos = {
     tipoMensaje: 'movimientoFicha',
     idFicha: datosJson.idFicha,
     posFicha: posFicha,
-    turnoJugador: turnoNuevo
+    color: colorPasillo,
+    turnoJugador: turnoNuevo,
+    enPasillo: pasillo
+
   }
 
   console.log("Datos enviados en enviarFicha: ",datos);

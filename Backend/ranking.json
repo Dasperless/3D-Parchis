@@ -1,7 +1,24 @@
 {
-    "ganador": {
-        "nombre": "Nombre",
-        "creador": "Creador",
-        "idPartida": "id"
-    }
+    "tipoMensaje" : "ranking",
+    "ganadores": [{
+        "nombre": "Dario",
+        "creador": "Dario",
+        "idPartida": "895Dario"
+    },{
+        "nombre": "Oscar",
+        "creador": "Dario",
+        "idPartida": "8431Dario"
+    },{
+        "nombre": "Otto",
+        "creador": "Luis",
+        "idPartida": "65412Luis"
+    },{
+        "nombre": "Juan",
+        "creador": "Oscar",
+        "idPartida": "8745Oscar"
+    },{
+        "nombre": "Pepe",
+        "creador": "Pepo",
+        "idPartida": "6314Pepo"
+    }]
 }

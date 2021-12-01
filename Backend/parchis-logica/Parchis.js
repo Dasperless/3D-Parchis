@@ -159,15 +159,29 @@ module.exports = class Parchis {
 	 */
 	verificarMovimiento(jugador, ficha, movimientos){
 		var posicionNueva;
-		if (ficha.estado === EstadoFicha.CASA){
+		if (ficha.estado === EstadoFicha.CASA){ // Si la ficha está en casa
 			posicionNueva = this.obtenerPosInicial(jugador);
-		}else{
+		}else if(ficha.movimientos === 64){//Si la ficha ya ha pasado 63 casillas
+			posicionNueva = 0;
+		}else{//Si esta en el tablero
 			posicionNueva = ficha.posicion;
 		}
-
+		
+		// Verifica los movimientos
 		for(let i = 0; i < movimientos; i++){
-			if (!this.tablero.obtenerCasilla(posicionNueva).sePuedeColocarFicha()){
-				return false;
+			if(ficha.movimientos+i === 64){ //Si la ficha ya ha pasado 63 casillas reinicia el contador
+				posicionNueva = 0;
+			}
+			if(ficha.movimientos + i < 64){
+				if (!this.tablero.obtenerCasilla(posicionNueva).sePuedeColocarFicha()){
+					return false;
+				}
+			}else{
+				if(this.tablero.obtenerPasillo(jugador, posicionNueva) === undefined){
+					return false;
+				}else if(!this.tablero.obtenerPasillo(jugador, posicionNueva).sePuedeColocarFicha()){
+					return false;
+				}
 			}
 			posicionNueva += 1;
 		}
@@ -198,10 +212,12 @@ module.exports = class Parchis {
 	 */
 	moverFicha(jugador, ficha, casillasAMover){
 		
-		this.quitarFichaTablero(jugador, ficha);//Quita la ficha del tablero al iniciar el turno
-
+		if(ficha.haComido()){
+			ficha.comio = false;
+		}
 		//Verifica si el movimiento es válido
 		if(this.verificarMovimiento(jugador, ficha, casillasAMover)){
+			this.quitarFichaTablero(jugador, ficha);//Quita la ficha del tablero al iniciar el turno
 			//Mueve la ficha en el tablero
 			for(let i=casillasAMover; i > 0; i--){
 				if(ficha.movimientos > 63){
@@ -209,17 +225,17 @@ module.exports = class Parchis {
 						ficha.colocarPasillo();
 					}
 					var pasillo = this.tablero.obtenerPasillo(jugador, ficha.posicion);
-					if(pasillo !== undefined){
-						pasillo.colocarFicha(ficha);
+					if(pasillo.numero !== 8){
+						pasillo.colocarFicha(ficha, i);
 					}else{
 						ficha.estado = EstadoFicha.GANO;
 					}
 					console.log(this.tablero.obtenerPasillo(jugador, ficha.posicion));
 				}else if(ficha.estado === EstadoFicha.CASA){
 					ficha.estado = EstadoFicha.TABLERO;
-					this.tablero.obtenerCasilla(this.obtenerPosInicial(jugador)).colocarFicha(ficha);
+					this.tablero.obtenerCasilla(this.obtenerPosInicial(jugador)).colocarFicha(ficha,i);
 				}else if(ficha.estado === EstadoFicha.TABLERO){
-					this.tablero.obtenerCasilla(ficha.posicion).colocarFicha(ficha);
+					this.tablero.obtenerCasilla(ficha.posicion).colocarFicha(ficha,i);
 				}
 
 				if(i>1){
