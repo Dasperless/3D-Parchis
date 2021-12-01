@@ -5,6 +5,27 @@
     Layout = "_Layout";
 }
 <div class="text-center">
-        <h3 class="display-4"><b>Ranking</b></h3>
-        @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
-    </div>
+    <h3 class="display-4"><b>Ranking</b></h3>
+    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+</div>
+
+<div class="container">
+    @*<button id="sendBtn"></button>*@
+    <button type="submit" class="btn btn-outline-success" id="sendBtn">
+        Ver <i class='bx bx-list-ol bx-burst-hover bx-border-circle'></i>
+    </button>
+    <table class="table dashboard-table border-primary table-hover" role="grid">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col" style="font-size:13px">Ganador</th>
+                <th scope="col" style="font-size:13px">Creador</th>
+                <th scope="col" style="font-size:13px">ID Partida</th>
+            </tr>
+        </thead>
+        <tbody id="tbJudador">
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="~/js/ranking.js" asp-append-version="true"></script>

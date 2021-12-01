@@ -19,20 +19,51 @@
             console.log($("#" + elementoPadre.prevObject[0].id));
             console.log(totalelementoEnTd);
             const idPadre = elementoPadre[0].id;
-            if (idPadre !== "" && totalelementoEnTd===0) {
+            if (idPadre !== "" && totalelementoEnTd === 0 && objData.enPasillo ===0) {
                 var id = idPadre.substring(0, idPadre.length - 3);
                 console.log("id==>", id);
                 $("#" + idPadre).text(id);
             }
+
+            let color = "";
+            if (objData.color === 1) {
+                color = "amarillo"
+            }
+            if (objData.color === 2) {
+                color = "azul"
+            }
+            if (objData.color === 3) {
+                color = "rojo"
+            }
+            if (objData.color === 4) {
+                color = "verde"
+            }
+
             //console.log(elementoPadre);
             $('#' + objData.idFicha).remove();
-            setposicion(objData.idFicha, objData.posFicha);
+            if (objData.enPasillo === 1) {
+                setposicionPasillo(objData.idFicha, color + objData.posFicha);
+            }
+            else {
+                setposicion(objData.idFicha, objData.posFicha);
+            }
             //$('#btnTirarDado').attr("disabled");
             $("#btnTirarDado").attr('disabled', 'disabled');
             $("#turnoDe").text(objData.turnoJugador);
             if ($("#identificacionJugadorText").text() === objData.turnoJugador) {
                 $('#btnTirarDado').removeAttr("disabled");
             }
+        }
+        if (data.includes("datosEstadistica")) {
+            $("#estadisticaIdPartida").text(objData.idPartida);
+            $("#estadisticaCreador").text(objData.creador);
+            html = "";
+            for (var i = 0; i < objData.jugadores.length; i++) {
+                html += "<tr>";
+                html += "<td>" + objData.jugadores[i]+"</td>"
+                html += "</tr>";
+            }
+            $("#tbJudador").html(html);
         }
     }
 
@@ -137,4 +168,30 @@ const setposicion = (idFicha, pos) => {
         $("#" + pos + "pos").append(html);
     }
     
+}
+
+
+const setposicionPasillo = (idFicha, pos) => {
+    const color = idFicha.split("x")[1];
+    //$("." + idFicha).hide();
+    var elementoExistente = $("#" + pos).find('img');
+    //console.log(elementoExistente, "CANTIDAD", elementoExistente.length);
+    var html = '<img class="fichaEncelda" src="/img/ficha' + color + '.png" id="' + idFicha + '" onclick="getFichaMovimiento(this.id)" />';
+    //if (elementoExistente.length === 0 || (elementoExistente[0].id).split('x')[1] !== color) {
+        $("#" + pos).html(html);
+    //}
+    //else {
+    //    $("#" + pos).append(html);
+    //}
+
+}
+
+const verEstadistica = () => {
+    const idPartida = getParameterByName("idPartida");
+    const jsonEstadisticas = {
+        tipoMensaje: "estadisticas",
+        idPartida: idPartida
+    }
+    ws.send(JSON.stringify(jsonEstadisticas));
+    $('#exampleModal').modal('show');
 }

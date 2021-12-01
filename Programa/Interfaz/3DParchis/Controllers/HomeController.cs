@@ -43,6 +43,11 @@ namespace _3DParchis.Controllers
             return View();
         }
 
+        public IActionResult VerEstadistica()
+        {
+            return View();
+        }
+
         public IActionResult Juego()
         {
             return View();
