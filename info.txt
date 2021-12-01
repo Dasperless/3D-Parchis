@@ -1,0 +1,7 @@
+a. Nombre del curso: Lenguajes de Porgramación
+b. Número de semestre y año lectivo: 2 2021
+c. Nombre de los Estudiantes: Dario Vargas, Daniel Villatoro, Daniel Calderón
+d. Número de carnet de los estudiantes: 2018123226, 2018229200, 2018155978 
+e. Número de proyecto programado: 4
+f. Fecha de entrega: 30/11/2021
+g. Estatus de la entrega: Superior
