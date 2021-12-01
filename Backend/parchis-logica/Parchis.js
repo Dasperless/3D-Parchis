@@ -161,7 +161,7 @@ module.exports = class Parchis {
 		var posicionNueva;
 		if (ficha.estado === EstadoFicha.CASA){ // Si la ficha está en casa
 			posicionNueva = this.obtenerPosInicial(jugador);
-		}else if(ficha.movimientos === 63){//Si la ficha ya ha pasado 63 casillas
+		}else if(ficha.movimientos === 64){//Si la ficha ya ha pasado 64 casillas
 			posicionNueva = 0;
 		}else{//Si esta en el tablero
 			posicionNueva = ficha.posicion;
@@ -169,10 +169,10 @@ module.exports = class Parchis {
 		
 		// Verifica los movimientos
 		for(let i = 0; i < movimientos; i++){
-			if(ficha.movimientos+i === 63){ //Si la ficha ya ha pasado 63 casillas reinicia el contador
+			if(ficha.movimientos+i === 64){ //Si la ficha ya ha pasado 64 casillas reinicia el contador
 				posicionNueva = 0;
 			}
-			if(ficha.movimientos + i < 63){
+			if(ficha.movimientos + i < 64){
 				if (!this.tablero.obtenerCasilla(posicionNueva).sePuedeColocarFicha()){
 					return false;
 				}
@@ -220,7 +220,7 @@ module.exports = class Parchis {
 			this.quitarFichaTablero(jugador, ficha);//Quita la ficha del tablero al iniciar el turno
 			//Mueve la ficha en el tablero
 			for(let i=casillasAMover; i > 0; i--){
-				if(ficha.movimientos >= 63){
+				if(ficha.movimientos > 63){
 					if (ficha.estado === EstadoFicha.TABLERO){
 						ficha.colocarPasillo();
 					}
