@@ -44,7 +44,7 @@ module.exports = class Ficha {
 	/**
 	 * Cambia a true si la ficha comió.
 	 */
-	comio(){
+	comioFicha(){
 		this.comio = true;
 	}
 

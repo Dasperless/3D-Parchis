@@ -18,7 +18,7 @@ module.exports = class Casilla {
 				var fichaTemp = this.fichas.pop();
 				fichaTemp.regresarCasa();
 				console.log("Ficha: ",ficha.color, " se comio a ficha ", fichaTemp.color);
-				ficha.comio();
+				ficha.comioFicha();
 			}
 		}
         ficha.sumarMovimientos();
